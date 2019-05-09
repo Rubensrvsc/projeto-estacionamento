@@ -5,8 +5,10 @@ from .models import *
 from .forms import ClienteForm
 from django.db import IntegrityError, transaction
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 
 class IndexView(View):
 
