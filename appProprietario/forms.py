@@ -8,6 +8,12 @@ class PropForm(forms.Form):
     email_prop = forms.EmailField(required=True) 
     senha_prop = forms.CharField(required=True) 
 
+    class Media:
+        css = {
+        'all': ('admin/css/geoposition_override.css',)
+        }
+        js = ('admin/js/geoposition_override.js',)
+
     def is_valid(self): 
         valid = True 
         if not super(PropForm, self).is_valid(): 

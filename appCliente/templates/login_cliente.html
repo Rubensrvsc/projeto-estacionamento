@@ -1,5 +1,43 @@
+<html>
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
 <form class="form-signin" role="form" action="{% url 'login' %}" method="post"> 
 {% csrf_token %} 
+<div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" autocomplete="off">
+                            <div class="form-group">
+                            <h2 class="form-signin-heading">Login cliente</h2> 
+                            </br>
+<input id="id_username" name="username" class="form-control" placeholder="Nome" required autofocus> 
+                            </div>
+                            <div class="form-group">
+<input type="password" id="id_password" name="password" class="form-control" placeholder="Senha" required> 
+                            </div>
+<button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Login</button> 
+                {% if form.errors %} 
+                    <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> 
+                    Por favor, verifique o Email e/ou Senha informados 
+                    </div> 
+                {% endif %} 
+            <ul class="nav navbar-nav">
+                    <li><a href="{% url 'registrar_cliente' %}">registre-se</a></li> 
+            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </html>
+    <!---
 <h2 class="form-signin-heading">Login</h2> 
 <input id="id_username" name="username" class="form-control" placeholder="Nome" required autofocus> 
 <input type="password" id="id_password" name="password" class="form-control" placeholder="Senha" required> 
@@ -11,6 +49,7 @@ Por favor, verifique o Email e/ou Senha informados
 </div> 
 {% endif %} 
 <ul class="nav navbar-nav">
-<li><a href="{% url 'registrar_cliente' %}">registre-se</a></li> 
+<li><a href="{% url 'registra_prop' %}">registre-se</a></li> 
 </ul>
 </form>
+--->

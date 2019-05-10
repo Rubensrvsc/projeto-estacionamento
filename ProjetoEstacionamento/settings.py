@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'geoposition',
+    'wagtailgeowidget',
+    'wagtail',
+    'localflavor',
     'appCliente',
     'appProprietario',
 ]
@@ -101,6 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+GEOPOSITION_MAP_OPTIONS = {
+    'minZoom': 15,
+    'maxZoom': 18,
+}
+
+GEOPOSITION_MARKER_OPTIONS = {
+    'cursor': 'move'
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -120,6 +133,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCMYCwwE3-wWiRmpuXFxkUp02qjZmWiWI0'
+
 LOGIN_URL='/login/'
 LOGOUT_URL='/logout/'
 LOGIN_REDIRECT_URL='/'

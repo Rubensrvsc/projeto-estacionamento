@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.views.generic.base import View
 from .forms import *
 from .models import *
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
@@ -39,6 +40,7 @@ class PropView(View):
 
             prop = Proprietario(nome_prop=dados_form['nome_prop'],  
                             email_prop=dados_form['email_prop'],
+                            location=dados_form['loc_prop'],
                             usuario_prop=usuario)
             
             prop.save()
