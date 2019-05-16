@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic.base import View
 from .forms import *
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -12,8 +13,22 @@ from django.http import HttpResponse, HttpResponseRedirect
 def login_prop(request):
     name = request.POST.get('username')
     passw = request.POST.get('password')
+    cont=0
+    '''if Proprietario.objects.all()==0:
+        return render(request,'deu_errado.html')
+    else:
+        for i in Proprietario.objects.all():
+            if name==i.nome_prop:
+                cont+=1
+    if cont>0:'''
+
     user = authenticate(username=name, password=passw)
     if user is not None:
+        for i in Proprietario.objects.all():
+            if name==i.nome_prop:
+                cont+=1
+        if cont==0:
+            return render(request,'deu_errado.html')
         if user.is_active:
             login(request,user)
             return render(request,'index_prop.html')
@@ -21,6 +36,16 @@ def login_prop(request):
             pass
     else:
         return render(request,'login_prop.html')
+    '''else:
+        return render(request,'deu_errado.html')'''
+
+def logout_prop(request):
+    logout(request)
+    return redirect('login_prop')
+
+@login_required
+def index_prop(request):
+    return render(request,'index_prop.html')
 
 class PropView(View):
 
@@ -40,7 +65,6 @@ class PropView(View):
 
             prop = Proprietario(nome_prop=dados_form['nome_prop'],  
                             email_prop=dados_form['email_prop'],
-                            location=dados_form['loc_prop'],
                             usuario_prop=usuario)
             
             prop.save()

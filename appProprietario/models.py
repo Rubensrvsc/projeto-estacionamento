@@ -10,14 +10,14 @@ from wagtailgeowidget.edit_handlers import GeoPanel
 
 # Create your models here.
 
-class Proprietario(Page):
+class Proprietario(models.Model):
     nome_prop = models.CharField(max_length=255)
     email_prop = models.EmailField()
     nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
     usuario_prop = models.OneToOneField(User, related_name="Propietario", on_delete=models.SET_NULL,default="",null=True, editable=False)
-    position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
+    #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
-    content_panels = Page.content_panels + [
+    '''content_panels = Page.content_panels + [
         GeoPanel('location'),
     ]
 
@@ -38,7 +38,7 @@ class Proprietario(Page):
 
     @property
     def lng(self):
-        return self.point['x']
+        return self.point['x']'''
 
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()
