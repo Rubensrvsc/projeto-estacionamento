@@ -18,6 +18,8 @@ from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from .serializers import *
+from appProprietario.models import *
+from appProprietario.serializers import *
 
 # Create your views here.
 
@@ -95,6 +97,14 @@ def registrar_cliente(request):
             form_serializer.save()
             return Response(form_serializer.data,status=status.HTTP_201_CREATED)
         return Response(form_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def obter_estacionamentos(request):
+    if request.method == 'GET':
+        estacionamentos = Proprietario.objects.all()
+        estacionamento_serializer = ProprietarioSerializer(estacionamentos,many=True)
+        return Response(estacionamento_serializer.data)
+
 
 
 
