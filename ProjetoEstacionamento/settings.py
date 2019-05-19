@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    #'rest_auth',
+    'corsheaders',
     'geoposition',
     'wagtailgeowidget',
     'wagtail',
@@ -46,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +59,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:4200',
+)
+
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.BasicAuthentication',
+'rest_framework.authentication.SessionAuthentication'),
+  'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAuthenticated', )
+   }
 
 ROOT_URLCONF = 'ProjetoEstacionamento.urls'
 
