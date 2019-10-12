@@ -40,6 +40,13 @@ class Proprietario(models.Model):
     def lng(self):
         return self.point['x']'''
 
+class Cliente(models.Model):
+    nome_cli = models.CharField(max_length=255)
+    email_cli = models.EmailField()
+    #usuario_cli = models.OneToOneField(User, related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    usuario_cli = models.OneToOneField('auth.User', related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
+
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()
-    prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE)
+    prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE,default="")
+    cliente_vaga = models.OneToOneField(Cliente, on_delete=models.CASCADE,default="")
