@@ -17,6 +17,9 @@ class Proprietario(models.Model):
     usuario_prop = models.OneToOneField(User, related_name="Propietario", on_delete=models.SET_NULL,default="",null=True, editable=False)
     #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
+    def __str__(self):
+        return self.nome_prop
+
     '''content_panels = Page.content_panels + [
         GeoPanel('location'),
     ]
@@ -49,4 +52,9 @@ class Cliente(models.Model):
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()
     prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE,default="")
-    cliente_vaga = models.OneToOneField(Cliente, on_delete=models.CASCADE,default="")
+    #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
+    ocupada = models.BooleanField(default=False)
+
+class Cliente_Vaga(models.Model):
+    cliente = models.OneToOneField(Cliente, related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    vaga = models.OneToOneField(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)

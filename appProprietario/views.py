@@ -26,17 +26,17 @@ sensitive_post_parameters_m = method_decorator(
 # Create your views here.
 
 
-def login_prop(request):
+'''def login_prop(request):
     name = request.POST.get('username')
     passw = request.POST.get('password')
     cont=0
-    '''if Proprietario.objects.all()==0:
+    if Proprietario.objects.all()==0:
         return render(request,'deu_errado.html')
     else:
         for i in Proprietario.objects.all():
             if name==i.nome_prop:
                 cont+=1
-    if cont>0:'''
+    if cont>0:
 
     user = authenticate(username=name, password=passw)
     if user is not None:
@@ -52,16 +52,17 @@ def login_prop(request):
             pass
     else:
         return redirect('index_prop')
-    '''else:
-        return render(request,'deu_errado.html')'''
-
+    else:
+        return render(request,'deu_errado.html')
+@login_required
 def logout_prop(request):
     logout(request)
-    return redirect('login_prop')
+    return redirect('login_prop')'''
 
 @login_required
 def index_prop(request):
-    return render(request,'index_prop.html')
+    usuario_logado = request.user
+    return render(request,'index_prop.html',{'usuario_logado':usuario_logado})
 
 class PropView(View):
 
@@ -84,7 +85,7 @@ class PropView(View):
                             usuario_prop=usuario)
             
             prop.save()
-            return render(request,'index_prop.html')
+            return redirect('index_prop')
         return render(request, self.template_name, {'form' : form})
 
 class RegisterViewCliente(CreateAPIView):
@@ -113,6 +114,17 @@ class RegisterViewCliente(CreateAPIView):
 
         complete_signup(self.request._request, user, None, None)
         return user
+
+#@login_required
+def cadastrar_vaga(request):
+    form=VagaForm(request.POST or None)
+    if request.method=='POST':
+        if form.is_valid():
+            form.save()
+            return redirect('index_prop')
+        else:
+            form=VagaForm()
+    return render(request, 'cadastrar_vaga.html',{'form':form})
 
 
 @api_view(['GET'])

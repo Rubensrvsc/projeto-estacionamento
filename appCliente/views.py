@@ -51,13 +51,13 @@ from appProprietario.serializers import *
 
     return (user, None)'''
 
-
+'''
 class IndexView(View):
 
     template_name = 'index.html'
 
     def get(self,request):
-        return render(request,self.template_name)
+        return render(request,self.template_name)'''
 
 class RegistraClienteView(View):
 

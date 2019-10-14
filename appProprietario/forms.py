@@ -23,6 +23,11 @@ class PropForm(forms.Form):
         errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList()) 
         errors.append(message)
 
+class VagaForm(forms.ModelForm):
+    class Meta:
+        model = Vaga
+        fields = '__all__'
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     password = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
