@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic.base import View
 from .forms import *
 from .models import *
+from .serializers import *
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
@@ -115,12 +116,13 @@ class RegisterViewCliente(CreateAPIView):
         complete_signup(self.request._request, user, None, None)
         return user
 
-#@login_required
+@login_required
 def cadastrar_vaga(request):
     form=VagaForm(request.POST or None)
     if request.method=='POST':
         if form.is_valid():
-            form.save()
+            form.save(commit=False)
+            form.prop = request.user.prop
             return redirect('index_prop')
         else:
             form=VagaForm()
@@ -130,7 +132,10 @@ def cadastrar_vaga(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 
 def obter_vagas(request):
-    pass
+    if request.method == 'GET':
+        vagas = Vaga.objects.filter(ocupada=False)
+        vagas_serializer = VagaSerializer(vagas,many=True)
+        return Response(vagas_serializer.data)
 
 @api_view(['POST','PUT'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 

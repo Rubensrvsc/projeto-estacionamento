@@ -14,7 +14,7 @@ class Proprietario(models.Model):
     nome_prop = models.CharField(max_length=255)
     email_prop = models.EmailField()
     nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
-    usuario_prop = models.OneToOneField(User, related_name="Propietario", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    usuario_prop = models.OneToOneField(User, related_name="prop", on_delete=models.SET_NULL,default="",null=True, editable=False)
     #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
     def __str__(self):

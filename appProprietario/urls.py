@@ -15,4 +15,5 @@ urlpatterns =[
     path('cadastrar_vaga/',cadastrar_vaga,name='cadastrar_vaga'),
     path('login/', views.LoginView.as_view(template_name='login.html'), name = "login"), 
     path('logout/', views.LogoutView.as_view(template_name='login.html'), name="logout"),
+    path('obter_vagas/',obter_vagas,name="obter_vagas"),
 ]
