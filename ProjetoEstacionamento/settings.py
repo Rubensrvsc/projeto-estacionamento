@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'appProprietario',
 ]
 
+INSTALLED_APPS += ('global_permissions',)
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     #'django.middleware.common.BrokenLinkEmailsMiddleware',

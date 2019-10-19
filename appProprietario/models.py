@@ -11,14 +11,21 @@ from wagtailgeowidget.edit_handlers import GeoPanel
 # Create your models here.
 
 class Proprietario(models.Model):
+
+    prop_choices=(
+        ("p","proprietario"),
+    )
+
     nome_prop = models.CharField(max_length=255)
     email_prop = models.EmailField()
-    nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
-    usuario_prop = models.OneToOneField(User, related_name="prop", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    #nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
+    is_prop = models.BooleanField(default=True)
+    #tipo_prop=models.CharField(choices=prop_choices)
+    usuario_prop = models.OneToOneField(User, related_name="prop", on_delete=models.CASCADE,editable=False)
     #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
     def __str__(self):
-        return self.nome_prop
+        return self.nome_prop + self.email_prop
 
     '''content_panels = Page.content_panels + [
         GeoPanel('location'),
@@ -46,8 +53,9 @@ class Proprietario(models.Model):
 class Cliente(models.Model):
     nome_cli = models.CharField(max_length=255)
     email_cli = models.EmailField()
+    is_cliente = models.BooleanField(default=True)
     #usuario_cli = models.OneToOneField(User, related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
-    usuario_cli = models.OneToOneField('auth.User', related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    usuario_cli = models.OneToOneField(User, related_name="Cliente", on_delete=models.CASCADE, editable=False)
 
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()

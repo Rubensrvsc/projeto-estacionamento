@@ -1,4 +1,6 @@
-
+{% if request.user.Cliente.is_cliente is True %}
+    <h1> Você não tem permissão de entrada</h1>
+{% else %}
 <html>
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -62,6 +64,9 @@
                 <li>
                     <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
                 </li>
+                <li>
+                    <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
+                </li>
 
             </ul>
         </div>
@@ -80,3 +85,4 @@
   </div><!-- /#wrapper -->
 </body>
 </html>
+{% endif %}

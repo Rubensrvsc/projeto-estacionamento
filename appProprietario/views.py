@@ -17,6 +17,7 @@ from rest_auth.models import TokenModel
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .permissions import IsOwnerOrReadOnly
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_auth.registration.app_settings import RegisterSerializer, register_permission_classes
 
@@ -62,8 +63,11 @@ def logout_prop(request):
 
 @login_required
 def index_prop(request):
-    usuario_logado = request.user
-    return render(request,'index_prop.html',{'usuario_logado':usuario_logado})
+    try:
+        if request.user.prop.is_prop is True:
+            return render(request,'index_prop.html')
+    except ObjectDoesNotExist:
+        return redirect('logout')
 
 class PropView(View):
 
@@ -84,6 +88,10 @@ class PropView(View):
             prop = Proprietario(nome_prop=dados_form['nome_prop'],  
                             email_prop=dados_form['email_prop'],
                             usuario_prop=usuario)
+            print(prop.nome_prop)
+            print(prop.email_prop)
+            print(prop.is_prop)
+            print(usuario.prop.nome_prop)
             
             prop.save()
             return redirect('index_prop')
