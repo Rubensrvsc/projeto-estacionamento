@@ -12,10 +12,6 @@ from wagtailgeowidget.edit_handlers import GeoPanel
 
 class Proprietario(models.Model):
 
-    prop_choices=(
-        ("p","proprietario"),
-    )
-
     nome_prop = models.CharField(max_length=255)
     email_prop = models.EmailField()
     #nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
@@ -25,7 +21,7 @@ class Proprietario(models.Model):
     #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
     def __str__(self):
-        return self.nome_prop + self.email_prop
+        return self.nome_prop
 
     '''content_panels = Page.content_panels + [
         GeoPanel('location'),
