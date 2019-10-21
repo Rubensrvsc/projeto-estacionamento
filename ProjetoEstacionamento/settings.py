@@ -48,10 +48,14 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'wagtailgeowidget',
     'wagtail',
+    'bootstrapform',
+    'crispy_forms',
     'localflavor',
     'appCliente',
     'appProprietario',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 INSTALLED_APPS += ('global_permissions',)
 

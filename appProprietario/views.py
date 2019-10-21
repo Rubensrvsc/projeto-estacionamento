@@ -24,6 +24,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .permissions import IsOwnerOrReadOnly
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.authtoken.models import Token
 
 from rest_auth.registration.app_settings import RegisterSerializer, register_permission_classes
 
@@ -214,11 +215,14 @@ class LogoutView(APIView):
         return self.finalize_response(request, response, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return self.logout(request)
+        self.logout(request)
+        #request.session.flush()
+        #return redirect('login_cliente/')
 
     def logout(self, request):
         try:
             request.user.auth_token.delete()
+            #token = Token.objects.get_or_create(user=request.user)
         except (AttributeError, ObjectDoesNotExist):
             pass
         if getattr(settings, 'REST_SESSION_LOGIN', True):
