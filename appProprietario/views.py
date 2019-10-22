@@ -315,6 +315,7 @@ def escolher_vaga(request,id_vaga):
         #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
         cv.save()
         return response(status=status.HTTP_201_CREATED)
+    return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT'])
 @login_required
@@ -325,5 +326,6 @@ def sair_vaga(request,id_vaga):
         vaga_serializer = VagaSerializer(vaga)
         if vaga_serializer.is_valid():
             vaga.save()
-            return response(vaga.data)
-        return response(vaga.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(vaga.data)
+        return Response(vaga.errors,status=status.HTTP_400_BAD_REQUEST)
+    return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
