@@ -20,4 +20,6 @@ urlpatterns =[
     path('login/', views.LoginView.as_view(template_name='login.html'), name = "login"), 
     path('logout/', views.LogoutView.as_view(template_name='login.html'), name="logout"),
     path('obter_vagas/',obter_vagas,name="obter_vagas"),
+    path('escolher_vaga/<int:id_vaga>',escolher_vaga,name='escolher_vaga'),
+    path('sair_vaga/<int:id_vaga>',sair_vaga,name='sair_vaga'),
 ]

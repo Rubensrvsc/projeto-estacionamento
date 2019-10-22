@@ -28,6 +28,12 @@ class VagaSerializer(serializers.ModelSerializer):
         model = Vaga
         fields = '__all__'
 
+class ClienteVagaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Cliente_Vaga
+        fields = '__all__'
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)

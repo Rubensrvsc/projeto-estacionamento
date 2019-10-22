@@ -59,6 +59,12 @@ class Vaga(models.Model):
     #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
     ocupada = models.BooleanField(default=False)
 
+    def vaga_ocupada(self):
+        self.ocupada = True
+
+    def sair_vaga(self):
+        self.ocupada = False
+
 class Cliente_Vaga(models.Model):
-    cliente = models.OneToOneField(Cliente, related_name="Cliente", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    cliente = models.OneToOneField(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
     vaga = models.OneToOneField(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)

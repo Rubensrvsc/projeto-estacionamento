@@ -302,7 +302,28 @@ def obter_vagas(request):
         vagas_serializer = VagaSerializer(vagas,many=True)
         return Response(vagas_serializer.data)
 
-@api_view(['POST','PUT'])
+@api_view(['POST','PUT','POST'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 
-def escolher_vaga(request):
-    pass
+def escolher_vaga(request,id_vaga):
+    if request.method == 'POST':
+        vaga = Vaga.objects.filter(id=id_vaga)
+        dados = {'cliente':request.user,'vaga':vaga}
+        cv = ClienteVagaSerializer(data=dados)
+        vaga.vaga_ocupada()
+        vaga_serializer = VagaSerializer(vaga)
+        vaga_serializer.save()
+        #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
+        cv.save()
+        return response(status=status.HTTP_201_CREATED)
+
+@api_view(['GET','PUT'])
+@login_required
+def sair_vaga(request,id_vaga):
+    if request.method == 'PUT':
+        vaga = Vaga.objects.filter(id=id_vaga)
+        vaga.sair_vaga()
+        vaga_serializer = VagaSerializer(vaga)
+        if vaga_serializer.is_valid():
+            vaga.save()
+            return response(vaga.data)
+        return response(vaga.errors,status=status.HTTP_400_BAD_REQUEST)
