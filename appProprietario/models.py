@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 from localflavor.br.br_states import STATE_CHOICES
-from wagtail.core.models import Page
-from wagtailgeowidget.helpers import geosgeometry_str_to_struct
+#from wagtail.core.models import Page
+#from wagtailgeowidget.helpers import geosgeometry_str_to_struct
 from django.utils.functional import cached_property
-from wagtailgeowidget.edit_handlers import GeoPanel
+#from wagtailgeowidget.edit_handlers import GeoPanel
 
 
 # Create your models here.
@@ -55,7 +55,7 @@ class Cliente(models.Model):
 
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()
-    prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE,default="")
+    prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE,default="", null=True, blank=True)
     #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
     ocupada = models.BooleanField(default=False)
 

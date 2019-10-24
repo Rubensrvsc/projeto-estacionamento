@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'geoposition',
      'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'wagtailgeowidget',
     'wagtail',

@@ -286,12 +286,13 @@ def cadastrar_vaga(request):
     form=VagaForm(request.POST or None)
     if request.method=='POST':
         if form.is_valid():
-            form.save(commit=False)
-            form.prop = request.user.prop
+            form_vaga = form.save(commit=False)
+            form_vaga.prop = request.user.prop
+            form_vaga.save()
             return redirect('index_prop')
         else:
             form=VagaForm()
-    return render(request, 'cadastrar_vaga.html',{'form':form})
+    return render(request, 'cadastrar_vaga.html',{'form_vaga':form})
 
 
 @api_view(['GET'])
@@ -302,10 +303,11 @@ def obter_vagas(request):
         vagas_serializer = VagaSerializer(vagas,many=True)
         return Response(vagas_serializer.data)
 
-@api_view(['POST','PUT','POST'])
+@api_view(['GET','PUT','POST'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 
 def escolher_vaga(request,id_vaga):
     if request.method == 'POST':
+        print('entrou')
         vaga = Vaga.objects.filter(id=id_vaga)
         dados = {'cliente':request.user,'vaga':vaga}
         cv = ClienteVagaSerializer(data=dados)
@@ -314,7 +316,7 @@ def escolher_vaga(request,id_vaga):
         vaga_serializer.save()
         #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
         cv.save()
-        return response(status=status.HTTP_201_CREATED)
+        return Response({'valor': 'Vaga escolhida com sucesso'},status=status.HTTP_201_CREATED)
     return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT'])
@@ -326,6 +328,6 @@ def sair_vaga(request,id_vaga):
         vaga_serializer = VagaSerializer(vaga)
         if vaga_serializer.is_valid():
             vaga.save()
-            return Response(vaga.data)
+            return Response({'valor': 'Vaga liberada com sucesso'},vaga.data)
         return Response(vaga.errors,status=status.HTTP_400_BAD_REQUEST)
     return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)

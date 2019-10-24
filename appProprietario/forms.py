@@ -24,9 +24,27 @@ class PropForm(forms.Form):
         errors.append(message)
 
 class VagaForm(forms.ModelForm):
+
     class Meta:
         model = Vaga
-        fields = '__all__'
+        fields = ['numero_vaga']
+
+    def is_valid(self):
+        valid = True
+        if not super(VagaForm,self).is_valid():
+            self.adiciona_erro('Por favor verifique os dados informados')
+            valid = False
+
+        numero_existe = Vaga.objects.filter(numero_vaga=self.cleaned_data['numero_vaga']).exists()
+        if numero_existe:
+            self.adiciona_erro('Numero da vaga já existe')
+            valid = False
+        return valid
+        pass
+
+    def adiciona_erro(self,message):
+        errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS,forms.utils.ErrorList())
+        errors.append(message)
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
