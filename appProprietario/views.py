@@ -189,13 +189,20 @@ class LoginViewCliente(GenericAPIView):
         return HttpResponse("deu certo")
 
     def post(self, request, *args, **kwargs):
-        self.request = request
-        self.serializer = self.get_serializer(data=self.request.data,
-                                              context={'request': request})
-        self.serializer.is_valid(raise_exception=True)
+        user_prop = self.request.POST["username"]
 
-        self.login()
-        return self.get_response()
+        if Proprietario.objects.filter(nome_prop=user_prop).exists():
+            return redirect('login_cliente')
+        else:
+            self.request = request
+        
+            self.serializer = self.get_serializer(data=self.request.data,
+                                              context={'request': request})
+            self.serializer.is_valid(raise_exception=True)
+
+            self.login()
+            return self.get_response()
+            
 
 class LogoutView(APIView):
     """
@@ -312,8 +319,8 @@ def escolher_vaga(request,id_vaga):
         dados = {'cliente':request.user,'vaga':vaga}
         cv = ClienteVagaSerializer(data=dados)
         vaga.vaga_ocupada()
-        vaga_serializer = VagaSerializer(vaga)
-        vaga_serializer.save()
+        #vaga_serializer = VagaSerializer(vaga)
+        #vaga_serializer.save()
         #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
         cv.save()
         return Response({'valor': 'Vaga escolhida com sucesso'},status=status.HTTP_201_CREATED)
