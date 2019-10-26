@@ -334,12 +334,12 @@ def escolher_vaga(request,id_vaga):
 @api_view(['GET','PUT'])
 @login_required
 def sair_vaga(request,id_vaga):
-    if request.method == 'PUT':
-        vaga = Vaga.objects.filter(id=id_vaga)
-        vaga.sair_vaga()
-        vaga_serializer = VagaSerializer(vaga)
-        if vaga_serializer.is_valid():
-            vaga.save()
-            return Response({'valor': 'Vaga liberada com sucesso'},vaga.data)
-        return Response(vaga.errors,status=status.HTTP_400_BAD_REQUEST)
-    return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
+    #if request.method == 'PUT':
+    vaga = Vaga.objects.get(id=id_vaga)
+    vaga.sair_vaga()
+    vaga_serializer = VagaSerializer(data=vaga)
+    #if vaga_serializer.is_valid():
+    vaga.save()
+    return Response({'valor': 'Vaga liberada com sucesso'},status=status.HTTP_200_OK)
+    '''return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
+    return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)'''
