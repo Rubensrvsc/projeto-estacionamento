@@ -310,22 +310,27 @@ def obter_vagas(request):
         vagas_serializer = VagaSerializer(vagas,many=True)
         return Response(vagas_serializer.data)
 
-@api_view(['GET','PUT','POST'])
+@api_view(['GET','POST','PUT'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 
 def escolher_vaga(request,id_vaga):
-    if request.method == 'POST':
-        print('entrou')
-        vaga = Vaga.objects.filter(id=id_vaga)
-        dados = {'cliente':request.user,'vaga':vaga}
-        cv = ClienteVagaSerializer(data=dados)
-        vaga.vaga_ocupada()
-        #vaga_serializer = VagaSerializer(vaga)
-        #vaga_serializer.save()
-        #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
+    #vaga = Vaga.objects.filter(id=id_vaga)
+    #if request.method == 'POST':
+    print('entrou')
+    vaga = Vaga.objects.filter(id=id_vaga)
+    print(vaga)
+    dados = {'cliente':request.user,'vaga':vaga}
+    cv = ClienteVagaSerializer(data=dados)
+    vaga.vaga_ocupada()
+    if cv.is_valid():
+            #vaga_serializer = VagaSerializer(vaga)
+            #vaga_serializer.save()
+            #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
+        print(cv)
         cv.save()
-        return Response({'valor': 'Vaga escolhida com sucesso'},status=status.HTTP_201_CREATED)
-    return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
-
+        return Response({'valor': 'foi possivel encontrar a vaga'},status=status.HTTP_201_CREATED)
+        '''else:
+            return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
+    return Response({'key': 'value'}, status=status.HTTP_200_OK)'''
 @api_view(['GET','PUT'])
 @login_required
 def sair_vaga(request,id_vaga):

@@ -59,6 +59,9 @@ class Vaga(models.Model):
     #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
     ocupada = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.prop.nome_prop
+
     def vaga_ocupada(self):
         self.ocupada = True
 
