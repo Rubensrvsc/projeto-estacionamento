@@ -53,6 +53,20 @@
 
 
   </div><!-- /#wrapper -->
+
+  <div>
+  <h2>Suas Vagas</h2>
+  </br>
+  {% if usuario_logado.prop_vaga is null%}
+
+  <h4>Não há vagas cadastradas</h4>
+  {% else %}
+  {% for i in usuario_logado.prop_vaga.objects.all %}
+        <h3>{{ i.numero_vaga}}</h3>
+  {% endfor %}
+  {% endif %}
+
+  </div>
 </body>
 </html>
 {% endif %}

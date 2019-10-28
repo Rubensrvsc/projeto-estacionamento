@@ -72,7 +72,8 @@ def logout_prop(request):
 def index_prop(request):
     try:
         if request.user.prop.is_prop is True:
-            return render(request,'index_prop.html')
+            usuario_logado = request.user.prop
+            return render(request,'index_prop.html',{'usuario_logado':usuario_logado})
     except ObjectDoesNotExist:
         return redirect('logout')
 
@@ -317,17 +318,20 @@ def escolher_vaga(request,id_vaga):
     #if request.method == 'POST':
     print('entrou')
     vaga = Vaga.objects.filter(id=id_vaga)
-    print(vaga)
-    dados = {'cliente':request.user,'vaga':vaga}
-    cv = ClienteVagaSerializer(data=dados)
-    vaga.vaga_ocupada()
-    if cv.is_valid():
+    if vaga.ocupada == True:
+        return HttpResponse('vaga já ocupada procure outra vaga')
+    else:
+        print(vaga)
+        dados = {'cliente':request.user,'vaga':vaga}
+        cv = ClienteVagaSerializer(data=dados)
+        vaga.vaga_ocupada()
+        if cv.is_valid():
             #vaga_serializer = VagaSerializer(vaga)
             #vaga_serializer.save()
             #Cliente_Vaga.objects.create(cliente=request.user,vaga=vaga)
-        print(cv)
-        cv.save()
-        return Response({'valor': 'foi possivel encontrar a vaga'},status=status.HTTP_201_CREATED)
+            print(cv)
+            cv.save()
+            return Response({'valor': 'foi possivel encontrar a vaga'},status=status.HTTP_201_CREATED)
         '''else:
             return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
     return Response({'key': 'value'}, status=status.HTTP_200_OK)'''

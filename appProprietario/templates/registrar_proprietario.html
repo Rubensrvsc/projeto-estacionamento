@@ -1,3 +1,5 @@
+{% extends "base_usuario.html" %} 
+{% block body %} 
 <form class="form-signin" action="{% url 'registra_prop' %}" method="post">
  {% csrf_token %} 
  <h2 class="form-signin-heading">Crie seu usuário</h2> 
@@ -14,3 +16,4 @@
     </div> 
  {% endif %}
  </form> 
+ {% endblock %}

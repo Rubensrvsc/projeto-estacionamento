@@ -55,7 +55,7 @@ class Cliente(models.Model):
 
 class Vaga(models.Model):
     numero_vaga = models.IntegerField()
-    prop = models.ForeignKey(Proprietario, on_delete=models.CASCADE,default="", null=True, blank=True)
+    prop = models.ForeignKey(Proprietario,related_name="prop_vaga", on_delete=models.CASCADE,default="", null=True, blank=True)
     #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
     ocupada = models.BooleanField(default=False)
 
