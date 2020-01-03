@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     #'wagtailgeowidget',
     #'wagtail',
     'bootstrapform',
-    'django-heroku',
     'gunicorn',
     'crispy_forms',
     #'localflavor',
