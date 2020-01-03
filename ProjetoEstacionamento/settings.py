@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
+
+django_heroku.settings(locals())
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,23 +45,25 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     #'rest_auth',
     'corsheaders',
-    'geoposition',
+    #'geoposition',
      'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    'wagtailgeowidget',
-    'wagtail',
+    #'wagtailgeowidget',
+    #'wagtail',
     'bootstrapform',
+    'django-heroku',
+    'gunicorn',
     'crispy_forms',
-    'localflavor',
+    #'localflavor',
     'appCliente',
     'appProprietario',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-INSTALLED_APPS += ('global_permissions',)
+#INSTALLED_APPS += ('global_permissions',)
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -78,7 +83,7 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True'''
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:4200',
+    #'localhost:4200',
     #'localhost:8100/registrar',
 )
 '''
