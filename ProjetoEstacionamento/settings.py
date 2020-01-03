@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     #'wagtailgeowidget',
     #'wagtail',
     'bootstrapform',
-    'gunicorn',
     'crispy_forms',
     #'localflavor',
     'appCliente',
