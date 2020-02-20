@@ -31,18 +31,18 @@
                    <a class="active" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-home" aria-hidden="true"></i>   <span style="color:white;">  Home </span></a>
                 </li>
                 <li>
-                    <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-user-o" aria-hidden="true"></i>   <span style="color:white;">  Profile </span></a>
+                    <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
+                </li>
+
+                <li>
+                    <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
                 </li>
                
                 <li>
                     <a class="#" href="{% url 'logout' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Logout </span></a>
                 </li>
-                <li>
-                    <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
-                </li>
-                <li>
-                    <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
-                </li>
+                
+               
 
             </ul>
         </div>
@@ -57,15 +57,33 @@
   <div>
   <h2>Suas Vagas</h2>
   </br>
-  {% if usuario_logado.prop_vaga is null%}
+  <!-- Tem que começar a partir da classe Vaga-->
+  {% if vagas_livres|length < 1 %}
+<div class="alert alert-danger" role="alert">
+    Não existe vaga livre
+  </div>
+{% else %}
+ <h1>Vagas livres</h1>
+  {% for i in vagas_livres %}
+  <div class="alert alert-success" role="alert">
+        {{ i }}
+  </div>
+{% endfor %}
+{% endif %}
 
-  <h4>Não há vagas cadastradas</h4>
+<h1>Vagas Ocupadas</h1>
+{% if vagas_ocupadas|length < 1 %}
+<div class="alert alert-danger" role="alert">
+    Não existe vaga ocupada
+  </div>
   {% else %}
-  {% for i in usuario_logado.prop_vaga.objects.all %}
-        <h3>{{ i.numero_vaga}}</h3>
-  {% endfor %}
-  {% endif %}
-
+{% for i in vagas_ocupadas %}
+<div class="alert alert-success" role="alert">
+    {{ i }}
+</div>
+{% endfor %}
+{% endif %}
+ 
   </div>
 </body>
 </html>

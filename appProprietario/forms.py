@@ -27,7 +27,7 @@ class VagaForm(forms.ModelForm):
 
     class Meta:
         model = Vaga
-        fields = ['numero_vaga']
+        fields = ['numero_vaga','prop','ocupada']
 
     def is_valid(self):
         valid = True

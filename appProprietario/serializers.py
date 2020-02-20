@@ -15,12 +15,33 @@ from allauth.utils import (email_address_exists,
                                get_username_max_length)
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
+from rest_auth.registration.serializers import RegisterSerializer
+
+
+class NameRegistrationSerializer(RegisterSerializer):
+
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+
+    def custom_signup(self, request, user):
+        user.first_name = self.validated_data.get('first_name', '')
+        user.last_name = self.validated_data.get('last_name', '')
+        user.save(update_fields=['first_name', 'last_name'])
+
 
 class ProprietarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proprietario
-        fields = ('nome_prop','email_prop',)
+        fields = '__all__'
+
+class VagaProprietarioSerializer(serializers.ModelSerializer):
+    
+    prop_vaga = serializers.ReadOnlyField(source='prop.nome_prop')
+    
+    class Meta:
+        model = Vaga
+        fields = ('numero_vaga','prop_vaga','ocupada')
 
 class VagaSerializer(serializers.ModelSerializer):
 

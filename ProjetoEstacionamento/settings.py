@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
+from datetime import timedelta
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
      'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'rest_auth',
     'rest_auth.registration',
     #'wagtailgeowidget',
     #'wagtail',
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
     #'localflavor',
     'appCliente',
     'appProprietario',
+    'testeserializers',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -81,8 +84,16 @@ CORS_ALLOW_CREDENTIALS = True'''
 
 CORS_ORIGIN_WHITELIST = (
     #'localhost:4200',
-    #'localhost:8100/registrar',
+    'http://localhost:8100',
 )
+
+REST_USE_JWT = True
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': timedelta(days=2),
+}
+
 '''
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -97,9 +108,14 @@ CORS_ALLOW_HEADERS = [
 ]'''
 
 REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.BasicAuthentication',
-'rest_framework.authentication.SessionAuthentication'),
-  'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAuthenticated', )
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+      'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',),
+  'DEFAULT_PERMISSION_CLASSES': ( 
+      'rest_framework.permissions.IsAuthenticated', 
+      ),
+      'NON_FIELD_ERRORS_KEY': 'global',
    }
 
 ROOT_URLCONF = 'ProjetoEstacionamento.urls'

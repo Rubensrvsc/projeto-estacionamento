@@ -12,6 +12,7 @@ from .serializers import *
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
+from rest_framework import generics
 from rest_framework.generics import CreateAPIView,GenericAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -31,6 +32,11 @@ from rest_auth.registration.app_settings import RegisterSerializer, register_per
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters('password1', 'password2')
 )
+from rest_auth.registration.views import RegisterView
+
+
+class NameRegistrationView(RegisterView):
+    serializer_class = NameRegistrationSerializer
 
 # Create your views here.
 
@@ -70,10 +76,19 @@ def logout_prop(request):
 
 @login_required
 def index_prop(request):
+    vagas_ocupadas = []
+    vagas_livres=[]
     try:
         if request.user.prop.is_prop is True:
             usuario_logado = request.user.prop
-            return render(request,'index_prop.html',{'usuario_logado':usuario_logado})
+            for i in Vaga.objects.filter(ocupada=False): 
+                if str(i.prop) == request.user.prop.nome_prop: 
+                    vagas_livres.append(i.numero_vaga)
+            for i in Vaga.objects.filter(ocupada=True): 
+                if str(i.prop) == request.user.prop.nome_prop: 
+                    vagas_ocupadas.append(i.numero_vaga)  
+            return render(request,'index_prop.html',{'usuario_logado':usuario_logado,
+            'vagas_livres':vagas_livres,'vagas_ocupadas':vagas_ocupadas})
     except ObjectDoesNotExist:
         return redirect('logout')
 
@@ -297,6 +312,7 @@ def cadastrar_vaga(request):
             form_vaga = form.save(commit=False)
             form_vaga.prop = request.user.prop
             form_vaga.save()
+            print("{} {} {}".format(form_vaga.numero_vaga,form_vaga.prop.nome_prop,form_vaga.ocupada))
             return redirect('index_prop')
         else:
             form=VagaForm()
@@ -310,6 +326,17 @@ def obter_vagas(request):
         vagas = Vaga.objects.filter(ocupada=False)
         vagas_serializer = VagaSerializer(vagas,many=True)
         return Response(vagas_serializer.data)
+
+@api_view(['GET'])
+def obter_vagas_com_prop(request):
+    pass
+
+class VagaPropietarioGet(generics.ListAPIView):
+
+    permission_classes = [IsAuthenticated]
+
+    queryset = Vaga.objects.all()
+    serializer_class = VagaProprietarioSerializer
 
 @api_view(['GET','POST','PUT'])
 @permission_classes((IsAuthenticated, IsOwnerOrReadOnly,)) 

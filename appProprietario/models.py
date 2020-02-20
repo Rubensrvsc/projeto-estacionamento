@@ -21,7 +21,7 @@ class Proprietario(models.Model):
     #position = GeopositionField(verbose_name=u'Geolocalização', help_text="Não altere os valores calculados automaticamente de latitude e longitude")
     
     def __str__(self):
-        return self.nome_prop
+        return '{}'.format(self.nome_prop)
 
     '''content_panels = Page.content_panels + [
         GeoPanel('location'),
@@ -60,7 +60,7 @@ class Vaga(models.Model):
     ocupada = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.prop.nome_prop
+        return '{}'.format(self.numero_vaga)
 
     def vaga_ocupada(self):
         self.ocupada = True
@@ -68,6 +68,14 @@ class Vaga(models.Model):
     def sair_vaga(self):
         self.ocupada = False
 
+    def natural_key(self):
+        return (self.numero_vaga,) + self.prop.natural_key()
+    natural_key.dependencies = ['appProprietario.models.Proprietario']
+
 class Cliente_Vaga(models.Model):
     cliente = models.OneToOneField(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
     vaga = models.OneToOneField(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    #horário de entrada
+    #horário de saída
+    #total em dinheiro
+    #transação terminada ou não
