@@ -26,6 +26,8 @@ from django.contrib.auth.decorators import login_required
 from .permissions import IsOwnerOrReadOnly
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from django.http import JsonResponse
 
 from rest_auth.registration.app_settings import RegisterSerializer, register_permission_classes
 
@@ -38,7 +40,43 @@ from rest_auth.registration.views import RegisterView
 class NameRegistrationView(RegisterView):
     serializer_class = NameRegistrationSerializer
 
+
+
 # Create your views here.
+
+class ClienteVagaView(APIView):
+
+    def get(self,request,format=None):
+        cliente_vaga = Cliente_Vaga.objects.all()
+        cv_serializer = ClienteVagaSerializer(cliente_vaga,many=True)
+        return Response(cv_serializer.data)
+
+    def post(self,request,format=None):
+        print(request.data["cliente"])
+        '''cv_serializer = ClienteVagaSerializer(data=request.data)
+        if cv_serializer.is_valid():
+            cv_serializer.save()
+            return Response(cv_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(cv_serializer.data, status=status.HTTP_404_NOT_FOUND)'''
+
+class ClienteVagaCreate(generics.CreateAPIView):
+
+    queryset = Cliente_Vaga.objects.all()
+    serializer_class = ClienteVagaSerializer
+
+    def create(self,request):
+        print(request.data)
+
+class ExampleView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        content = {
+            'user': request.user,  # `django.contrib.auth.User` instance.
+            'auth': request.auth,  # None
+        }
+        return Response(request)
 
 
 '''def login_prop(request):
@@ -362,6 +400,10 @@ def escolher_vaga(request,id_vaga):
         '''else:
             return Response({'valor': 'Não foi possivel encontrar a vaga'},status=status.HTTP_400_BAD_REQUEST)
     return Response({'key': 'value'}, status=status.HTTP_200_OK)'''
+
+def escolher_vaga_teste_entra_dados():
+    pass
+
 @api_view(['GET','PUT'])
 @login_required
 def sair_vaga(request,id_vaga):

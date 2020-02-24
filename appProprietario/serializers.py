@@ -16,7 +16,8 @@ from allauth.utils import (email_address_exists,
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_auth.registration.serializers import RegisterSerializer
-
+from rest_framework.authtoken.models import Token
+from rest_auth.models import TokenModel
 
 class NameRegistrationSerializer(RegisterSerializer):
 
@@ -53,7 +54,7 @@ class ClienteVagaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cliente_Vaga
-        fields = '__all__'
+        fields = ('cliente','vaga',)
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)

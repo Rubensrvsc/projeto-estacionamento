@@ -92,7 +92,14 @@ REST_USE_JWT = True
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': timedelta(days=2),
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_response_payload_handler',
+
+    'JWT_SECRET_KEY': SECRET_KEY,
 }
+
+
+
 
 '''
 CORS_ALLOW_HEADERS = [

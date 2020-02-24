@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 #from wagtail.core.models import Page
 #from wagtailgeowidget.helpers import geosgeometry_str_to_struct
 from django.utils.functional import cached_property
+from datetime import datetime
 #from wagtailgeowidget.edit_handlers import GeoPanel
 
 
@@ -76,6 +77,11 @@ class Cliente_Vaga(models.Model):
     cliente = models.OneToOneField(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
     vaga = models.OneToOneField(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)
     #horário de entrada
+    hora_entrada = models.DateTimeField(default=datetime.now, blank=True)
     #horário de saída
+    hora_saida = models.DateTimeField(null=True)
     #total em dinheiro
+    total_transacao = models.FloatField(null=True)
     #transação terminada ou não
+    transacao_is_terminada = models.BooleanField(default=False)
+
