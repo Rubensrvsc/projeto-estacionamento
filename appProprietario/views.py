@@ -12,6 +12,7 @@ from .serializers import *
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.generics import CreateAPIView,GenericAPIView
 from rest_framework import status
@@ -52,7 +53,8 @@ class ClienteVagaView(APIView):
         return Response(cv_serializer.data)
 
     def post(self,request,format=None):
-        print(request.data["cliente"])
+        dados = request.data
+        print(type(dados))
         '''cv_serializer = ClienteVagaSerializer(data=request.data)
         if cv_serializer.is_valid():
             cv_serializer.save()
@@ -65,7 +67,24 @@ class ClienteVagaCreate(generics.CreateAPIView):
     serializer_class = ClienteVagaSerializer
 
     def create(self,request):
-        print(request.data)
+        print(request.data['cliente'])
+        nome_cli = request.data['cliente']
+        vaga_cli_requerida = request.data['vaga']
+        usuario_cliente = User.objects.get(username=nome_cli)
+        vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
+        #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
+        cliente=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
+        print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
+        return Response(status=status.HTTP_201_CREATED)
+
+
+class ClienteVagaSaida(generics.UpdateAPIView):
+
+    queryset = Cliente_Vaga.objects.all()
+    serializer_class = ClienteVagaSerializer
+
+    def update(self,request):
+        pass
 
 class ExampleView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]

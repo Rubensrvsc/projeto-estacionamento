@@ -1,59 +1,60 @@
+
+{% extends 'base.html' %}
+
+
+
+
+ <!-- /#wrapper -->
+{% block body %}
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  </head>
+  <body>
+  <div id="throbber" style="display:none; min-height:120px;"></div>
+  <div id="noty-holder"></div>
+  
+  <div id="wrapper">
+  
+      <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          
+  
+          
+          <!-- Top Menu Items -->
+        
+  
+          <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+          <div class="collapse navbar-collapse navbar-ex1-collapse" style="background-color: #616060; border:1px solid #616060;">
+              <ul class="nav navbar-nav side-nav">
+                
+                  <li>
+                     <a class="active" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-home" aria-hidden="true"></i>   <span style="color:white;">  Home </span></a>
+                  </li>
+                  <li>
+                      <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
+                  </li>
+  
+                  <li>
+                      <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
+                  </li>
+                 
+                  <li>
+                      <a class="#" href="{% url 'logout' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Logout </span></a>
+                  </li>
+                  
+                 
+  
+              </ul>
+          </div>
+          <!--- /.navbar-collapse -->
+    </nav>
 {% if request.user.Cliente.is_cliente is True %}
     <h1> Você não tem permissão de entrada</h1>
 {% else %}
-<html>
-<head>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-</head>
-<body>
-<div id="throbber" style="display:none; min-height:120px;"></div>
-<div id="noty-holder"></div>
-
-<div id="wrapper">
-
-    <!-- Navigation -->
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        
-
-        
-        <!-- Top Menu Items -->
-      
-
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse" style="background-color: #616060; border:1px solid #616060;">
-            <ul class="nav navbar-nav side-nav">
-              
-                <li>
-                   <a class="active" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-home" aria-hidden="true"></i>   <span style="color:white;">  Home </span></a>
-                </li>
-                <li>
-                    <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
-                </li>
-
-                <li>
-                    <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
-                </li>
-               
-                <li>
-                    <a class="#" href="{% url 'logout' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Logout </span></a>
-                </li>
-                
-               
-
-            </ul>
-        </div>
-        <!--- /.navbar-collapse -->
-  </nav>
-
-
-
-
-  </div><!-- /#wrapper -->
-
   <div>
   <h2>Suas Vagas</h2>
   </br>
@@ -85,6 +86,6 @@
 {% endif %}
  
   </div>
-</body>
-</html>
+
 {% endif %}
+{% endblock %}

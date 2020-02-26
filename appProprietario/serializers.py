@@ -56,6 +56,12 @@ class ClienteVagaSerializer(serializers.ModelSerializer):
         model = Cliente_Vaga
         fields = ('cliente','vaga',)
 
+class ClienteVagaSaidaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Cliente_Vaga
+        field = '__all__'
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)
