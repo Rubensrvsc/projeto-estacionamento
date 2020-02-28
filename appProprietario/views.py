@@ -84,7 +84,7 @@ class ClienteVagaSaida(generics.UpdateAPIView):
     serializer_class = ClienteVagaSerializer
 
     def update(self,request):
-        pass
+        print(request.data)
 
 class ExampleView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
