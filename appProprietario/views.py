@@ -88,11 +88,15 @@ class ClienteVagaSaida(generics.UpdateAPIView):
         print(request.data)
         nome_cli = request.data['cliente']
         vaga_cli_requerida = request.data['vaga']
-        vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
+
+        usuario_cliente = User.objects.get(username=nome_cli)
+        vaga_requerida = Vaga.objects.get(cliente=usuario_cliente,numero_vaga=vaga_cli_requerida)
+        
         cv = Cliente_Vaga.objects.get(vaga=vaga_requerida)
         cv.sai_vaga()
         vaga_requerida.sair_vaga()
-        print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
+        vaga_requerida.save()
+        print("numero_vaga: {}, nome_cliente: {}".format(cv.cliente,cv.vaga))
         return Response(status=status.HTTP_201_CREATED)
 
 class ExampleView(APIView):
