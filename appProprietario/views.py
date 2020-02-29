@@ -74,6 +74,7 @@ class ClienteVagaCreate(generics.CreateAPIView):
         vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
         cliente=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
+        vaga_requerida.vaga_ocupada()
         print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
         return Response(status=status.HTTP_201_CREATED)
 
