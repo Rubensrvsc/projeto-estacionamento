@@ -86,6 +86,14 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 
     def update(self,request):
         print(request.data)
+        nome_cli = request.data['cliente']
+        vaga_cli_requerida = request.data['vaga']
+        vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
+        cv = Cliente_Vaga.objects.get(vaga=vaga_requerida)
+        cv.sai_vaga()
+        vaga_requerida.sair_vaga()
+        print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
+        return Response(status=status.HTTP_201_CREATED)
 
 class ExampleView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]

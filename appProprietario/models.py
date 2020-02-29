@@ -92,4 +92,5 @@ class Cliente_Vaga(models.Model):
         tempo = diff
         self.total_transacao = tempo * 0.1
         self.transacao_is_terminada = True
+        self.save()
 
