@@ -19,6 +19,7 @@ urlpatterns =[
     #path('clientevaga/',ClienteVagaView.as_view(),name='clientevaga'),
     path('clientevagacreate/',ClienteVagaCreate.as_view(),name='clientevagacreate'),
     path('clientevagasaida/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
+    path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
     path('cadastrar_vaga/',cadastrar_vaga,name='cadastrar_vaga'),
     path('login/', views.LoginView.as_view(template_name='login.html'), name = "login"), 

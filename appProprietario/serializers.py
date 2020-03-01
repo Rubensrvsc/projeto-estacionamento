@@ -60,7 +60,13 @@ class ClienteVagaSaidaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cliente_Vaga
-        field = '__all__'
+        fields = '__all__'
+
+class MostraClienteVagaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Cliente_Vaga
+        fields = '__all__'
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)
