@@ -99,17 +99,14 @@ class ClienteVagaSaida(generics.UpdateAPIView):
         print("numero_vaga: {}, nome_cliente: {}".format(cv.cliente,cv.vaga))
         return Response(status=status.HTTP_200_OK)
 
-class MostraClienteVaga(generics.ListAPIView):
+class MostraClienteVaga(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    def get(self,request):
-        user = User.objects.get(username=str(request.user))
-        name = Cliente_Vaga.objects.get(cliente=user)
-        cv_serializer = MostraClienteVagaSerializer(name,many=True)
-        #print(type(str(request.user)))
-        #print(name.hora_entrada)
-        return Response(cv_serializer.data,status=status.HTTP_200_OK)
+    def get(self,request,format=None):
+        cliente_vaga = Cliente_Vaga.objects.all()
+        cv_serializer = MostraClienteVagaSerializer(cliente_vaga,many=True)
+        return Response(cv_serializer.data)
 
 class ExampleView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
