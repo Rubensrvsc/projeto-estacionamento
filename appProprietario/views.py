@@ -104,7 +104,11 @@ class MostraClienteVaga(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self,request,format=None):
-        cliente_vaga = Cliente_Vaga.objects.all()
+        print(request.user)
+        user=User.objects.get(username=str(request.user))
+        print(type(user))
+        cliente_vaga = Cliente_Vaga.objects.filter(cliente=user)
+        print(cliente_vaga)
         cv_serializer = MostraClienteVagaSerializer(cliente_vaga,many=True)
         return Response(cv_serializer.data)
 
