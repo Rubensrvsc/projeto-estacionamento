@@ -60,7 +60,7 @@ class ClienteVagaSaidaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cliente_Vaga
-        fields = ('hora_saida','transacao_is_terminada',)
+        fields = '__all__'
 
 class MostraClienteVagaSerializer(serializers.ModelSerializer):
 

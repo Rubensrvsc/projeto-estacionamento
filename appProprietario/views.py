@@ -108,11 +108,13 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 @permission_classes((IsAuthenticated,))
 def update_cliente_vaga_saida(request,id):
     print(type(request.user.username))
+    print(id)
     nome_cli = request.user.username
     vaga_cli_requerida = Vaga.objects.get(numero_vaga=id)
     usuario_cliente = User.objects.get(username=nome_cli)
     print(vaga_cli_requerida.ocupada)
     print(usuario_cliente)
+    print(request.data)
     
     try:
         user = request.user
@@ -123,13 +125,14 @@ def update_cliente_vaga_saida(request,id):
     if request.method == 'PUT':
         cv = Cliente_Vaga.objects.get(cliente=usuario_cliente,vaga=vaga_cli_requerida)
         cv.sai_vaga()
-        cv_serializer=ClienteVagaSaidaSerializer(cv,many=True)
-        cv_serializer.save()
+        cv_serializer=ClienteVagaSaidaSerializer(cv,data=request.data)
+        if cv_serializer.is_valid():
+            cv_serializer.save()
         vaga_cli_requerida.sair_vaga()
-        vcq = VagaSerializer(vaga_cli_requerida,many=True)
-        vcq.save()
+        vcq = VagaSerializer(vaga_cli_requerida,data=request.data)
+        if vcq.is_valid():
+            vcq.save()
         return Response(cv_serializer.data)
-        pass
     return Response(status=status.HTTP_202_ACCEPTED)
 
 
