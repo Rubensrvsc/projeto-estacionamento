@@ -69,6 +69,7 @@ class Vaga(models.Model):
 
     def sair_vaga(self):
         self.ocupada = False
+        self.save()
 
     def natural_key(self):
         return (self.numero_vaga,) + self.prop.natural_key()

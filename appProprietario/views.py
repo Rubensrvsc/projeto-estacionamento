@@ -10,6 +10,7 @@ from .models import *
 from django.conf import settings
 from .serializers import *
 from django.utils.decorators import method_decorator
+from rest_framework.decorators import api_view,permission_classes
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -75,6 +76,8 @@ class ClienteVagaCreate(generics.CreateAPIView):
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
         cliente=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
         vaga_requerida.vaga_ocupada()
+        vcq = VagaSerializer(vaga_requerida,many=True)
+        vcq.save()
         print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
         return Response(status=status.HTTP_201_CREATED)
 
@@ -82,22 +85,53 @@ class ClienteVagaCreate(generics.CreateAPIView):
 class ClienteVagaSaida(generics.UpdateAPIView):
 
     queryset = Cliente_Vaga.objects.all()
-    serializer_class = ClienteVagaSerializer
+    serializer_class = ClienteVagaSaidaSerializer
 
     def update(self,request):
         print(request.data)
-        nome_cli = request.data['cliente']
+        '''nome_cli = request.data['cliente']
         vaga_cli_requerida = request.data['vaga']
 
         usuario_cliente = User.objects.get(username=nome_cli)
-        vaga_requerida = Vaga.objects.get(cliente=usuario_cliente,numero_vaga=vaga_cli_requerida)
+        vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
         
         cv = Cliente_Vaga.objects.get(vaga=vaga_requerida)
         cv.sai_vaga()
+        cv_serializer=ClienteVagaSaidaSerializer(cv,many=True)
+        cv_serializer.save()
         vaga_requerida.sair_vaga()
         vaga_requerida.save()
         print("numero_vaga: {}, nome_cliente: {}".format(cv.cliente,cv.vaga))
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)'''
+
+@api_view(['GET','PUT'])
+@permission_classes((IsAuthenticated,))
+def update_cliente_vaga_saida(request,id):
+    print(type(request.user.username))
+    nome_cli = request.user.username
+    vaga_cli_requerida = Vaga.objects.get(numero_vaga=id)
+    usuario_cliente = User.objects.get(username=nome_cli)
+    print(vaga_cli_requerida.ocupada)
+    print(usuario_cliente)
+    
+    try:
+        user = request.user
+        #cv = Cliente_Vaga.objects.get(id=id)
+    except Cliente_Vaga.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PUT':
+        cv = Cliente_Vaga.objects.get(cliente=usuario_cliente,vaga=vaga_cli_requerida)
+        cv.sai_vaga()
+        cv_serializer=ClienteVagaSaidaSerializer(cv,many=True)
+        cv_serializer.save()
+        vaga_cli_requerida.sair_vaga()
+        vcq = VagaSerializer(vaga_cli_requerida,many=True)
+        vcq.save()
+        return Response(cv_serializer.data)
+        pass
+    return Response(status=status.HTTP_202_ACCEPTED)
+
 
 class MostraClienteVaga(APIView):
 
@@ -230,117 +264,8 @@ class RegisterViewCliente(CreateAPIView):
         complete_signup(self.request._request, user, None, None)
         return user
 
-class LoginViewCliente(GenericAPIView):
-    permission_classes = (AllowAny,)
-    serializer_class = LoginSerializer
-    token_model = TokenModel
-
-    @sensitive_post_parameters_m
-    def dispatch(self, *args, **kwargs):
-        return super(LoginViewCliente, self).dispatch(*args, **kwargs)
-
-    def process_login(self):
-        django_login(self.request, self.user)
-
-    '''def get_response_serializer(self):
-        if getattr(settings, 'REST_USE_JWT', False):
-            response_serializer = JWTSerializer
-        else:
-            response_serializer = TokenSerializer
-        return response_serializer'''
-
-    def login(self):
-        self.user = self.serializer.validated_data['user']
-
-        '''if getattr(settings, 'REST_USE_JWT', False):
-            self.token = jwt_encode(self.user)
-        else:
-            self.token = create_token(self.token_model, self.user,
-                                      self.serializer)'''
-
-        if getattr(settings, 'REST_SESSION_LOGIN', True):
-            self.process_login()
-
-    def get_response(self):
-        '''serializer_class = self.get_response_serializer()
-
-        if getattr(settings, 'REST_USE_JWT', False):
-            data = {
-                'user': self.user,
-                'token': self.token
-            }
-            serializer = serializer_class(instance=data,
-                                          context={'request': self.request})
-        else:
-            serializer = serializer_class(instance=self.token,
-                                          context={'request': self.request})
-
-        response = Response(serializer.data, status=status.HTTP_200_OK)
-        if getattr(settings, 'REST_USE_JWT', False):
-            from rest_framework_jwt.settings import api_settings as jwt_settings
-            if jwt_settings.JWT_AUTH_COOKIE:
-                from datetime import datetime
-                expiration = (datetime.utcnow() + jwt_settings.JWT_EXPIRATION_DELTA)
-                response.set_cookie(jwt_settings.JWT_AUTH_COOKIE,
-                                    self.token,
-                                    expires=expiration,
-                                    httponly=True)'''
-        return HttpResponse("deu certo")
-
-    def post(self, request, *args, **kwargs):
-        user_prop = self.request.POST["username"]
-
-        if Proprietario.objects.filter(nome_prop=user_prop).exists():
-            return redirect('login_cliente')
-        else:
-            self.request = request
-        
-            self.serializer = self.get_serializer(data=self.request.data,
-                                              context={'request': request})
-            self.serializer.is_valid(raise_exception=True)
-
-            self.login()
-            return self.get_response()
             
 
-class LogoutView(APIView):
-    """
-    Calls Django logout method and delete the Token object
-    assigned to the current User object.
-
-    Accepts/Returns nothing.
-    """
-    permission_classes = (AllowAny,)
-
-    def get(self, request, *args, **kwargs):
-        if getattr(settings, 'ACCOUNT_LOGOUT_ON_GET', False):
-            response = self.logout(request)
-        else:
-            response = self.http_method_not_allowed(request, *args, **kwargs)
-
-        return self.finalize_response(request, response, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.logout(request)
-        #request.session.flush()
-        #return redirect('login_cliente/')
-
-    def logout(self, request):
-        try:
-            request.user.auth_token.delete()
-            #token = Token.objects.get_or_create(user=request.user)
-        except (AttributeError, ObjectDoesNotExist):
-            pass
-        if getattr(settings, 'REST_SESSION_LOGIN', True):
-            django_logout(request)
-
-        response = Response({"detail": ("Successfully logged out.")},
-                            status=status.HTTP_200_OK)
-        if getattr(settings, 'REST_USE_JWT', False):
-            from rest_framework_jwt.settings import api_settings as jwt_settings
-            if jwt_settings.JWT_AUTH_COOKIE:
-                response.delete_cookie(jwt_settings.JWT_AUTH_COOKIE)
-        return response
 
 class RegisterClienteView(CreateAPIView):
     serializer_class = RegisterSerializerCliente
