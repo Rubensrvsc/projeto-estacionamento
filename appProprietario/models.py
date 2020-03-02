@@ -75,8 +75,8 @@ class Vaga(models.Model):
     natural_key.dependencies = ['appProprietario.models.Proprietario']
 
 class Cliente_Vaga(models.Model):
-    cliente = models.OneToOneField(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
-    vaga = models.OneToOneField(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    cliente = models.ForeignKey(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
+    vaga = models.ForeignKey(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)
     #horário de entrada
     hora_entrada = models.DateTimeField(default=timezone.now(), blank=True)
     #horário de saída

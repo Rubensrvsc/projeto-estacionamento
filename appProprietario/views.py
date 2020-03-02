@@ -74,11 +74,16 @@ class ClienteVagaCreate(generics.CreateAPIView):
         usuario_cliente = User.objects.get(username=nome_cli)
         vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
-        cliente=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
-        vaga_requerida.vaga_ocupada()
-        vcq = VagaSerializer(vaga_requerida,many=True)
-        vcq.save()
-        print("numero_vaga: {}, nome_cliente: {}".format(cliente.cliente,cliente.vaga))
+        cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
+        cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
+        vaga_requerida.ocupada=True
+        print(vaga_requerida.ocupada)
+        vaga_requerida.save()
+        vcq = VagaSerializer(vaga_requerida,data=request.data)
+        if vcq.is_valid() and cli_vaga_serializer.is_valid():
+            vcq.save()
+            cli_vaga_serializer.save()
+        print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -115,6 +120,8 @@ def update_cliente_vaga_saida(request,id):
     print(vaga_cli_requerida.ocupada)
     print(usuario_cliente)
     print(request.data)
+    vaga_cli_requerida.ocupada=False
+    vaga_cli_requerida.save()
     
     try:
         user = request.user
@@ -126,11 +133,10 @@ def update_cliente_vaga_saida(request,id):
         cv = Cliente_Vaga.objects.get(cliente=usuario_cliente,vaga=vaga_cli_requerida)
         cv.sai_vaga()
         cv_serializer=ClienteVagaSaidaSerializer(cv,data=request.data)
-        if cv_serializer.is_valid():
-            cv_serializer.save()
-        vaga_cli_requerida.sair_vaga()
+        
         vcq = VagaSerializer(vaga_cli_requerida,data=request.data)
-        if vcq.is_valid():
+        
+        if vcq.is_valid() and cv_serializer.is_valid():
             vcq.save()
         return Response(cv_serializer.data)
     return Response(status=status.HTTP_202_ACCEPTED)
