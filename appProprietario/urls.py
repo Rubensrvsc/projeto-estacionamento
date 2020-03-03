@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include,path
 from .views import *
+from rest_framework import routers
 from django.views.generic.base import TemplateView
 from django.contrib.auth import login,views
 from django.conf.urls import url
@@ -19,7 +20,8 @@ urlpatterns =[
     #path('clientevaga/',ClienteVagaView.as_view(),name='clientevaga'),
     path('clientevagacreate/',ClienteVagaCreate.as_view(),name='clientevagacreate'),
     #path('clientevagasaida/<int:id>/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
-    path('clientesaidavaga/<int:id>/',update_cliente_vaga_saida,name='update_vaga'),
+    path('clientesaidavaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida,name='update_vaga'),
+    #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
     path('cadastrar_vaga/',cadastrar_vaga,name='cadastrar_vaga'),

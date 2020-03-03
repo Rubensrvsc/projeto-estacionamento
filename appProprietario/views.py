@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view,permission_classes
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from rest_framework import generics
+from rest_framework import generics,viewsets
 from rest_framework.generics import CreateAPIView,GenericAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -68,6 +68,7 @@ class ClienteVagaCreate(generics.CreateAPIView):
     serializer_class = ClienteVagaSerializer
 
     def create(self,request):
+        print("entrou")
         print(request.data['cliente'])
         nome_cli = request.data['cliente']
         vaga_cli_requerida = request.data['vaga']
@@ -83,8 +84,9 @@ class ClienteVagaCreate(generics.CreateAPIView):
         if vcq.is_valid() and cli_vaga_serializer.is_valid():
             vcq.save()
             cli_vaga_serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
         print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ClienteVagaSaida(generics.UpdateAPIView):
@@ -111,10 +113,12 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 
 @api_view(['GET','PUT'])
 @permission_classes((IsAuthenticated,))
-def update_cliente_vaga_saida(request,id):
-    print(type(request.user.username))
+def update_cliente_vaga_saida(request,nome_cli,id):
+    #print(type(request.user.username))
+    print(request.data)
     print(id)
-    nome_cli = request.user.username
+    print(nome_cli)
+    #nome_cli = request.user.username
     vaga_cli_requerida = Vaga.objects.get(numero_vaga=id)
     usuario_cliente = User.objects.get(username=nome_cli)
     print(vaga_cli_requerida.ocupada)
@@ -130,7 +134,7 @@ def update_cliente_vaga_saida(request,id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'PUT':
-        cv = Cliente_Vaga.objects.get(cliente=usuario_cliente,vaga=vaga_cli_requerida)
+        cv = Cliente_Vaga.objects.get(cliente=usuario_cliente,vaga=vaga_cli_requerida,transacao_is_terminada=False)
         cv.sai_vaga()
         cv_serializer=ClienteVagaSaidaSerializer(cv,data=request.data)
         
@@ -138,7 +142,7 @@ def update_cliente_vaga_saida(request,id):
         
         if vcq.is_valid() and cv_serializer.is_valid():
             vcq.save()
-        return Response(cv_serializer.data)
+            return Response(cv_serializer.data)
     return Response(status=status.HTTP_202_ACCEPTED)
 
 
