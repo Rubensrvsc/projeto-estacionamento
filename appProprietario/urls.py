@@ -18,7 +18,7 @@ urlpatterns =[
     path('registra_cliente/',RegisterClienteView.as_view(),name='registra_cliente'),
     #path('rest-auth/', include('rest_auth.urls')),
     #path('clientevaga/',ClienteVagaView.as_view(),name='clientevaga'),
-    path('clientevagacreate/',ClienteVagaCreate.as_view(),name='clientevagacreate'),
+    path('clientevagacreate/',ClienteVagaView.as_view(),name='clientevagacreate'),
     #path('clientevagasaida/<int:id>/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
     path('clientesaidavaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida,name='update_vaga'),
     #path('', include(router.urls)),

@@ -54,15 +54,27 @@ class ClienteVagaView(APIView):
         return Response(cv_serializer.data)
 
     def post(self,request,format=None):
-        dados = request.data
-        print(type(dados))
-        '''cv_serializer = ClienteVagaSerializer(data=request.data)
-        if cv_serializer.is_valid():
-            cv_serializer.save()
-            return Response(cv_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(cv_serializer.data, status=status.HTTP_404_NOT_FOUND)'''
+        print("entrou")
+        print(request.data['vaga'])
+        nome_cli = request.data['cliente']
+        vaga_cli_requerida = request.data['vaga']
+        usuario_cliente = User.objects.get(username=nome_cli)
+        vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
+        #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
+        cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
+        cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
+        vaga_requerida.ocupada=True
+        print(vaga_requerida.ocupada)
+        vaga_requerida.save()
+        vcq = VagaSerializer(vaga_requerida,data=request.data)
+        if vcq.is_valid() and cli_vaga_serializer.is_valid():
+            vcq.save()
+            cli_vaga_serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-class ClienteVagaCreate(generics.CreateAPIView):
+class Cria_Vaga(generics.CreateAPIView):
 
     queryset = Cliente_Vaga.objects.all()
     serializer_class = ClienteVagaSerializer
