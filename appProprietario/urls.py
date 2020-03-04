@@ -20,7 +20,9 @@ urlpatterns =[
     #path('clientevaga/',ClienteVagaView.as_view(),name='clientevaga'),
     path('clientevagacreate/',ClienteVagaView.as_view(),name='clientevagacreate'),
     #path('clientevagasaida/<int:id>/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
-    path('clientesaidavaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida,name='update_vaga'),
+    path('clientesaidavaga/',Sai_Vaga_cliente.as_view(),name='update_vaga'),
+    #path('clientesaivaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida),
+
     #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),

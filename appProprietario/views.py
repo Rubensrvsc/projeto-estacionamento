@@ -74,6 +74,8 @@ class ClienteVagaView(APIView):
         print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+
 class Cria_Vaga(generics.CreateAPIView):
 
     queryset = Cliente_Vaga.objects.all()
@@ -123,6 +125,22 @@ class ClienteVagaSaida(generics.UpdateAPIView):
         print("numero_vaga: {}, nome_cliente: {}".format(cv.cliente,cv.vaga))
         return Response(status=status.HTTP_200_OK)'''
 
+class Sai_Vaga_cliente(APIView):
+    def put(self,request):
+        print(request.data)
+        id_vaga =request.data["vaga_cliente"]
+        cv = Cliente_Vaga.objects.get(id=id_vaga,transacao_is_terminada=False)
+        vg = cv.vaga
+        vg.ocupada=False
+        vg.save()
+        cv.sai_vaga()
+        cv_serializer=ClienteVagaSaidaSerializer(cv,data=request.data)
+        vcq = VagaSerializer(vg,data=request.data)
+        if vcq.is_valid() and cv_serializer.is_valid():
+            vcq.save()
+            return Response(cv_serializer.data)
+        return Response(status=status.HTTP_202_ACCEPTED)
+        
 @api_view(['GET','PUT'])
 @permission_classes((IsAuthenticated,))
 def update_cliente_vaga_saida(request,nome_cli,id):
