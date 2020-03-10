@@ -138,6 +138,7 @@ class Sai_Vaga_cliente(APIView):
         vcq = VagaSerializer(vg,data=request.data)
         if vcq.is_valid() and cv_serializer.is_valid():
             vcq.save()
+            cv_serializer.save()
             return Response(cv_serializer.data)
         return Response(status=status.HTTP_202_ACCEPTED)
         
@@ -174,6 +175,12 @@ def update_cliente_vaga_saida(request,nome_cli,id):
             vcq.save()
             return Response(cv_serializer.data)
     return Response(status=status.HTTP_202_ACCEPTED)
+
+class MostraNomeProp(generics.ListAPIView):
+
+    serializer_class = MostraNomePropsSerializer
+    queryset = Proprietario.objects.all()
+    permission_classes = [IsAuthenticated]
 
 
 class MostraClienteVaga(APIView):

@@ -62,6 +62,12 @@ class ClienteVagaSaidaSerializer(serializers.ModelSerializer):
         model = Cliente_Vaga
         fields = '__all__'
 
+class MostraNomePropsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Proprietario
+        fields = ('nome_prop',)
+
 class MostraClienteVagaSerializer(serializers.ModelSerializer):
 
     class Meta:

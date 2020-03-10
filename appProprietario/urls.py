@@ -22,7 +22,7 @@ urlpatterns =[
     #path('clientevagasaida/<int:id>/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
     path('clientesaidavaga/',Sai_Vaga_cliente.as_view(),name='update_vaga'),
     #path('clientesaivaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida),
-
+    path('mostranomeprop/',MostraNomeProp.as_view(),name='mostra_nome_prop'),
     #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
