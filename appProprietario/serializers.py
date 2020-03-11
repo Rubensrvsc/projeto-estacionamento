@@ -28,15 +28,14 @@ class NameRegistrationSerializer(RegisterSerializer):
         ('d','deficiente')
     )
 
+    
+    #escolhe_tipo = serializers.ChoiceField(required=False,choices=escolha)
     first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
-    escolhe_tipo = serializers.ChoiceField(required=False,choices=escolha)
 
     def custom_signup(self, request, user):
         user.first_name = self.validated_data.get('first_name', '')
-        user.last_name = self.validated_data.get('last_name', '')
-        user.escolhe_tipo = self.validated_data('escolhe_tipo','')
-        user.save(update_fields=['escolhe_tipo'])
+        #user.escolhe_tipo = self.validated_data.get('escolhe_tipo','')
+        user.save(update_fields=['first_name'])
 
 
 class ProprietarioSerializer(serializers.ModelSerializer):
