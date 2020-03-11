@@ -56,7 +56,16 @@ class Cliente(models.Model):
     usuario_cli = models.OneToOneField(User, related_name="Cliente", on_delete=models.CASCADE, editable=False)
 
 class Vaga(models.Model):
+
+    escolha=(
+        ('n','Normal'),
+        ('i','Idoso'),
+        ('g','Gestante'),
+        ('d','Deficiente')
+    )
+
     numero_vaga = models.IntegerField()
+    tipo_vaga = models.CharField(max_length=255,choices=escolha)
     prop = models.ForeignKey(Proprietario,related_name="prop_vaga", on_delete=models.CASCADE,default="", null=True, blank=True)
     #prop_vaga = models.OneToOneField(Proprietario, on_delete=models.CASCADE,default="")
     ocupada = models.BooleanField(default=False)
