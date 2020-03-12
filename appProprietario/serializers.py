@@ -78,6 +78,8 @@ class MostraNomePropsSerializer(serializers.ModelSerializer):
 
 class MostraClienteVagaSerializer(serializers.ModelSerializer):
 
+    num_vaga = serializers.ReadOnlyField(source='vaga.numero_vaga')
+
     class Meta:
         model = Cliente_Vaga
         fields = '__all__'
