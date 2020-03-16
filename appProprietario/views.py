@@ -141,6 +141,16 @@ class Sai_Vaga_cliente(APIView):
             cv_serializer.save()
             return Response(cv_serializer.data)
         return Response(status=status.HTTP_202_ACCEPTED)
+
+class ProcuraVagasProp(generics.ListAPIView):
+
+    serializer_class = VagaSerializer
+
+    def get_queryset(self):
+        #print(self.kwargs)
+        id_prop = self.kwargs['id']
+        print(id_prop)
+        return Vaga.objects.filter(prop=self.kwargs['id'])
         
 @api_view(['GET','PUT'])
 @permission_classes((IsAuthenticated,))

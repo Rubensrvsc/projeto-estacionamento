@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
 #INSTALLED_APPS += ('global_permissions',)
 
 MIDDLEWARE = [

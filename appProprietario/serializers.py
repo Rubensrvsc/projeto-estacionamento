@@ -29,7 +29,7 @@ class NameRegistrationSerializer(RegisterSerializer):
     )
 
     
-    #escolhe_tipo = serializers.ChoiceField(required=False,choices=escolha)
+    #escolhe_tipo = serializers.ChoiceField(required=False,choices=escolha,allow_blank=True)
     first_name = serializers.CharField(required=False)
 
     def custom_signup(self, request, user):
@@ -74,7 +74,7 @@ class MostraNomePropsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proprietario
-        fields = ('nome_prop',)
+        fields = ('nome_prop','id')
 
 class MostraClienteVagaSerializer(serializers.ModelSerializer):
 

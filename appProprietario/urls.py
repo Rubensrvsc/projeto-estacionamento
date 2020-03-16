@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth import login,views
 from django.conf.urls import url
 from .forms import *
+from rest_auth.registration.views import VerifyEmailView
 
 urlpatterns =[
     #path('login_prop/', login_prop,name='login_prop'),
@@ -21,8 +22,11 @@ urlpatterns =[
     path('clientevagacreate/',ClienteVagaView.as_view(),name='clientevagacreate'),
     #path('clientevagasaida/<int:id>/',ClienteVagaSaida.as_view(),name='clientevagasaida'),
     path('clientesaidavaga/',Sai_Vaga_cliente.as_view(),name='update_vaga'),
+    path('account-confirm-email/', VerifyEmailView.as_view(),
+     name='account_email_verification_sent'),
     #path('clientesaivaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida),
     path('mostranomeprop/',MostraNomeProp.as_view(),name='mostra_nome_prop'),
+    path('mostravagasprop/<int:id>/',ProcuraVagasProp.as_view(),name='procuravagasprop'),
     #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),

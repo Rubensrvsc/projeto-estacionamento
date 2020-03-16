@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser
 #from geoposition.fields import GeopositionField
 #from localflavor.br.br_states import STATE_CHOICES
 #from wagtail.core.models import Page
@@ -82,6 +82,7 @@ class Vaga(models.Model):
     def natural_key(self):
         return (self.numero_vaga,) + self.prop.natural_key()
     natural_key.dependencies = ['appProprietario.models.Proprietario']
+
 
 class Cliente_Vaga(models.Model):
     cliente = models.ForeignKey(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
