@@ -58,10 +58,10 @@ class Cliente(models.Model):
 class Vaga(models.Model):
 
     escolha=(
-        ('n','Normal'),
-        ('i','Idoso'),
-        ('g','Gestante'),
-        ('d','Deficiente')
+        ('Normal','Normal'),
+        ('Idoso','Idoso'),
+        ('Gestante','Gestante'),
+        ('Deficiente','Deficiente')
     )
 
     numero_vaga = models.IntegerField()

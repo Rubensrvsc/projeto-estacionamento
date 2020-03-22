@@ -150,7 +150,18 @@ class ProcuraVagasProp(generics.ListAPIView):
         #print(self.kwargs)
         id_prop = self.kwargs['id']
         print(id_prop)
-        return Vaga.objects.filter(prop=self.kwargs['id'])
+        vagas = Vaga.objects.filter(prop=self.kwargs['id'])
+        return vagas
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def obtem_vagas_prop(request,id_prop):
+    try:
+        vagas = Vaga.objects.filter(prop=id_prop)
+    except Vaga.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        vagas_serializer = VagaSerializer(vagas, many=True)
+        return Response(vagas_serializer.data)
         
 @api_view(['GET','PUT'])
 @permission_classes((IsAuthenticated,))
