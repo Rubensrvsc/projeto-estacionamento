@@ -52,6 +52,14 @@ class VagaProprietarioSerializer(serializers.ModelSerializer):
         model = Vaga
         fields = ('numero_vaga','prop_vaga','ocupada')
 
+class VagaASerOcupadaSerializer(serializers.ModelSerializer):
+
+    prop_vaga = serializers.ReadOnlyField(source='prop.nome_prop')
+
+    class Meta:
+        model = Vaga
+        fields = '__all__'
+
 class VagaSerializer(serializers.ModelSerializer):
 
     class Meta:

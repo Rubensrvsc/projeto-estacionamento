@@ -27,6 +27,7 @@ urlpatterns =[
     #path('clientesaivaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida),
     path('mostranomeprop/',MostraNomeProp.as_view(),name='mostra_nome_prop'),
     path('mostravagasprop/<int:id>/',ProcuraVagasProp.as_view(),name='procuravagasprop'),
+    path('obtemvagaaserocupada/<int:vaga_id>/',VagaASerOcupada.as_view(),name='vagaaserocupada'),
     path('obtemvagasprop/<int:id_prop>/',obtem_vagas_prop,name='obtemvagasprop'),
     #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),

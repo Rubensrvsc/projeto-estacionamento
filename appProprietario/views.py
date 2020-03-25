@@ -152,6 +152,17 @@ class ProcuraVagasProp(generics.ListAPIView):
         print(id_prop)
         vagas = Vaga.objects.filter(prop=self.kwargs['id'])
         return vagas
+
+class VagaASerOcupada(generics.ListAPIView):
+
+    serializer_class = VagaASerOcupadaSerializer
+
+    def get_queryset(self):
+        id_vaga = self.kwargs['vaga_id']
+        print(id_vaga)
+        vaga = Vaga.objects.filter(numero_vaga=id_vaga)
+        return vaga
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def obtem_vagas_prop(request,id_prop):
