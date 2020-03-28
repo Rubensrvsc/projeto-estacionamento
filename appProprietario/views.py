@@ -60,18 +60,21 @@ class ClienteVagaView(APIView):
         vaga_cli_requerida = request.data['vaga']
         usuario_cliente = User.objects.get(username=nome_cli)
         vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
+        if Cliente_Vaga.objects.filter(cliente=usuario_cliente,vaga=vaga_requerida).exists():
+            print("já existe uma vaga requerida por este cliente")
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
-        cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
-        cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
-        vaga_requerida.ocupada=True
-        print(vaga_requerida.ocupada)
-        vaga_requerida.save()
-        vcq = VagaSerializer(vaga_requerida,data=request.data)
-        if vcq.is_valid() and cli_vaga_serializer.is_valid():
-            vcq.save()
-            cli_vaga_serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-        print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
+        else:
+            cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
+            cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
+            vaga_requerida.ocupada=True
+            print(vaga_requerida.ocupada)
+            vaga_requerida.save()
+            vcq = VagaSerializer(vaga_requerida,data=request.data)
+            if vcq.is_valid() and cli_vaga_serializer.is_valid():
+                vcq.save()
+                cli_vaga_serializer.save()
+                return Response(status=status.HTTP_201_CREATED)
+            print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
