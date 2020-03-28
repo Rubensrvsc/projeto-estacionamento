@@ -131,8 +131,9 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 class Sai_Vaga_cliente(APIView):
     def put(self,request):
         print(request.data)
-        id_vaga =request.data["vaga_cliente"]
-        cv = Cliente_Vaga.objects.get(id=id_vaga,transacao_is_terminada=False)
+        num_vaga =request.data["vaga_cliente"]
+        vaga_cli = Vaga.objects.get(numero_vaga=num_vaga)
+        cv = Cliente_Vaga.objects.get(vaga=vaga_cli,transacao_is_terminada=False)
         vg = cv.vaga
         vg.ocupada=False
         vg.save()
