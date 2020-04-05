@@ -31,7 +31,7 @@ urlpatterns =[
     path('obtemvagasprop/<int:id_prop>/',obtem_vagas_prop,name='obtemvagasprop'),
     #path('', include(router.urls)),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
-    path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
+    #path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
     path('cadastrar_vaga/',cadastrar_vaga,name='cadastrar_vaga'),
     path('login/', views.LoginView.as_view(template_name='login.html'), name = "login"), 
     path('logout/', views.LogoutView.as_view(template_name='login.html'), name="logout"),
