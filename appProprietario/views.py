@@ -169,6 +169,10 @@ class VagaASerOcupada(generics.ListAPIView):
         vaga = Vaga.objects.filter(numero_vaga=id_vaga)
         return vaga
 
+@permission_classes((IsAuthenticated,))
+def exclui_vaga(request,num_vaga):
+    pass
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def obtem_vagas_prop(request,id_prop):

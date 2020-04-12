@@ -11,6 +11,9 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!------ Include the above in your HEAD tag ---------->
+  <style>
+  
+  </style>
   </head>
   <body>
   <div id="throbber" style="display:none; min-height:120px;"></div>
@@ -52,6 +55,7 @@
           </div>
           <!--- /.navbar-collapse -->
     </nav>
+
 {% if request.user.Cliente.is_cliente is True %}
     <h1> Você não tem permissão de entrada</h1>
 {% else %}
@@ -68,6 +72,10 @@
   {% for i in vagas_livres %}
   <div class="alert alert-success" role="alert">
         {{ i }}
+
+        
+          <img src="../static/icons8-lixeira-vazia-64.png" class="img-responsive pull-right" width="32"/>
+       
   </div>
 {% endfor %}
 {% endif %}
@@ -76,7 +84,7 @@
 {% if vagas_ocupadas|length < 1 %}
 <div class="alert alert-danger" role="alert">
     Não existe vaga ocupada
-  </div>
+  </div></div>>
   {% else %}
 {% for i in vagas_ocupadas %}
 <div class="alert alert-success" role="alert">
@@ -89,3 +97,7 @@
 
 {% endif %}
 {% endblock %}
+ 
+
+
+
