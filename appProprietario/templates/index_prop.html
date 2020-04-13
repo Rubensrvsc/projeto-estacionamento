@@ -73,8 +73,10 @@
   <div class="alert alert-success" role="alert">
         {{ i }}
 
-        
-          <img src="../static/icons8-lixeira-vazia-64.png" class="img-responsive pull-right" width="32"/>
+        <a href="{% url 'exclui_vaga' i %}">
+          <img src="../static/icons8-lixeira-vazia-64.png" class="img-responsive pull-right" width="32"
+           />
+        </a>
        
   </div>
 {% endfor %}

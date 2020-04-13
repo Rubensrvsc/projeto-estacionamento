@@ -171,7 +171,10 @@ class VagaASerOcupada(generics.ListAPIView):
 
 @permission_classes((IsAuthenticated,))
 def exclui_vaga(request,num_vaga):
-    pass
+    vaga = Vaga.objects.get(numero_vaga=num_vaga)
+    print(vaga.numero_vaga)
+    vaga.delete()
+    return redirect('index_prop')
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
