@@ -60,7 +60,7 @@ class ClienteVagaView(APIView):
         vaga_cli_requerida = request.data['vaga']
         usuario_cliente = User.objects.get(username=nome_cli)
         vaga_requerida = Vaga.objects.get(numero_vaga=vaga_cli_requerida)
-        if Cliente_Vaga.objects.filter(cliente=usuario_cliente,vaga=vaga_requerida).exists() and Vaga.objects.filter(numero_vaga=vaga_cli_requerida,ocupada=True).exists():
+        if Cliente_Vaga.objects.filter(cliente=usuario_cliente,transacao_em_andamento=True).exists():#,vaga=vaga_requerida).exists() and Vaga.objects.filter(numero_vaga=vaga_cli_requerida,ocupada=True).exists():
             print("já existe uma vaga requerida por este cliente")
             res={"valor":"Já existe uma vaga requerida por este cliente"}
             return Response(res)

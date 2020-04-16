@@ -95,6 +95,8 @@ class Cliente_Vaga(models.Model):
     total_transacao = models.FloatField(null=True)
     #transação terminada ou não
     transacao_is_terminada = models.BooleanField(default=False)
+    #transação em andamento
+    transacao_em_andamento = models.BooleanField(default=True)
 
     def sai_vaga(self):
         self.hora_saida=timezone.now()
@@ -102,5 +104,6 @@ class Cliente_Vaga(models.Model):
         tempo = diff
         self.total_transacao = tempo * 0.1
         self.transacao_is_terminada = True
+        self.transacao_em_andamento = False
         self.save()
 
