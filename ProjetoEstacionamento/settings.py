@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
+#import django_heroku
 from datetime import timedelta
 
 
@@ -228,5 +228,5 @@ LOGIN_URL='/login/'
 LOGOUT_URL='/logout/'
 LOGIN_REDIRECT_URL='/index_prop/'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
