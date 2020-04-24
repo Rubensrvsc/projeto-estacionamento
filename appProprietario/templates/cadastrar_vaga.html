@@ -1,13 +1,15 @@
-  {% extends 'base.html' %}
  {% load bootstrap %}
  
-  {% block body %}
+
 
 <head>
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
     .container
     {
@@ -16,6 +18,45 @@
 </style>
 </head>
 <body>
+
+   
+     
+            <!-- Brand and toggle get grouped for better mobile display -->
+            
+    
+            
+            <!-- Top Menu Items -->
+          
+    <div class="inline_header">
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" style="background-color: #616060; border:1px solid #616060;">
+                <ul class="nav navbar-nav side-nav">
+                  
+                    <li>
+                       <a class="active" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-home" aria-hidden="true"></i>   <span style="color:white;">  Home </span></a>
+                    </li>
+                    <li>
+                        <a class="#" href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> {{request.user.prop}} </span></a>
+                    </li>
+    
+                    <li>
+                        <a class="#" href="{% url 'cadastrar_vaga' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Cadastrar vaga </span></a>
+                    </li>
+                   
+                    <li>
+                        <a class="#" href="{% url 'logout' %}" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-cogs" aria-hidden="true"></i>   <span style="color:white;"> Logout </span></a>
+                    </li>
+                    
+                   
+    
+                </ul>
+            </div>
+            <!--- /.navbar-collapse -->
+      </nav>
+    </div>
+   
+
+
 <div class="container">
 <nav  class="p-3 mb-2 text-dark">
     <h1>Cadastro da vaga</h1>
@@ -27,4 +68,3 @@
     </form>
     </div>   
     </body>
-{% endblock %}
