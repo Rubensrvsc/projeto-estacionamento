@@ -1,0 +1,10 @@
+.inline_header{
+    display: inline-block;
+    background-color: #616060; 
+    border:1px solid #616060;
+}
+
+.container
+{
+    margin-top:100px;
+}
