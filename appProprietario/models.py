@@ -88,7 +88,7 @@ class Cliente_Vaga(models.Model):
     cliente = models.ForeignKey(User, related_name="usuario", on_delete=models.SET_NULL,default="",null=True, editable=False)
     vaga = models.ForeignKey(Vaga, related_name="Vaga", on_delete=models.SET_NULL,default="",null=True, editable=False)
     #horário de entrada
-    hora_entrada = models.DateTimeField(default=timezone.now(), blank=True)
+    hora_entrada = models.DateTimeField(blank=True)
     #horário de saída
     hora_saida = models.DateTimeField(null=True)
     #total em dinheiro
