@@ -67,8 +67,8 @@ class ClienteVagaView(APIView):
             return Response(res)
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
         else:
-            cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida)
-            cliente_vaga.hora_entrada = timezone.now()
+            cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida,
+            hora_entrada = timezone.now(),transacao_is_terminada=False)
             cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
             vaga_requerida.ocupada=True
             print(vaga_requerida.ocupada)
@@ -147,6 +147,7 @@ class Sai_Vaga_cliente(APIView):
         if vcq.is_valid() and cv_serializer.is_valid():
             vcq.save()
             cv_serializer.save()
+            print("vaga saiu")
             return Response(cv_serializer.data)
         return Response(status=status.HTTP_202_ACCEPTED)
 
