@@ -86,10 +86,13 @@ class ClienteVagaView(APIView):
 def vaga_ja_alocada(request):
     nome_cli = request.data['cliente']
     usuario_cliente = User.objects.get(username=nome_cli)
-    cliente_vaga = Cliente_Vaga.objects.filter(cliente=usuario_cliente,
-    transacao_em_andamento=True).exists()
-    cli_vaga = ClienteVagaSerializer(cliente_vaga)
-    return Response(cli_vaga.data)
+    if(Cliente_Vaga.objects.filter(cliente=usuario_cliente,
+    transacao_em_andamento=True).exists()):
+        cli_vaga = ClienteVagaSerializer(cliente_vaga)
+        return Response(cli_vaga.data)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    return Response(status=status.HTTP_404_NOT_FOUND)
     #return Response({"valor":"Já existe uma vaga requerida por este cliente"})
 
 class Cria_Vaga(generics.CreateAPIView):
