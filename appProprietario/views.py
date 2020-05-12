@@ -46,7 +46,7 @@ class NameRegistrationView(RegisterView):
 
 
 # Create your views here.
-
+#impedir que o usuário possa entar no listapropvagas
 class ClienteVagaView(APIView):
 
     def get(self,request,format=None):
