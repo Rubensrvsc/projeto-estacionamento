@@ -101,9 +101,13 @@ class Cliente_Vaga(models.Model):
     def sai_vaga(self):
         self.hora_saida=datetime.now()
         format = '%H:%M:%S'
-        diff = self.hora_saida.minute - self.hora_entrada.minute
-        tempo = diff
-        self.total_transacao = tempo * 0.1
+        diff = datetime.strptime(self.hora_saida.strftime("%H:%M:%S"),format) - datetime.strptime(self.hora_entrada.strftime("%H:%M:%S"),format)
+        #self.hora_saida.minute - self.hora_entrada.minute
+        #print("Diff: "+str(diff.total_seconds()))
+        print("Diffm: "+str(diff))
+        tempo = diff.total_seconds()/60
+        #print("Tempo: "+str(tempo))
+        self.total_transacao = int(tempo) * 0.1
         self.transacao_is_terminada = True
         self.transacao_em_andamento = False
         self.save()
