@@ -5,7 +5,7 @@ from django.contrib.auth.models import User,AbstractUser
 #from wagtail.core.models import Page
 #from wagtailgeowidget.helpers import geosgeometry_str_to_struct
 from django.utils.functional import cached_property
-from datetime import datetime
+from datetime import datetime,timezone
 from django.utils import timezone
 #from wagtailgeowidget.edit_handlers import GeoPanel
 
@@ -99,7 +99,8 @@ class Cliente_Vaga(models.Model):
     transacao_em_andamento = models.BooleanField(default=True)
 
     def sai_vaga(self):
-        self.hora_saida=timezone.now()
+        self.hora_saida=datetime.now()
+        format = '%H:%M:%S'
         diff = self.hora_saida.minute - self.hora_entrada.minute
         tempo = diff
         self.total_transacao = tempo * 0.1

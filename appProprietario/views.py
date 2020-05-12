@@ -10,7 +10,8 @@ from .models import *
 from django.conf import settings
 from .serializers import *
 from django.utils.decorators import method_decorator
-from django.utils import timezone
+#from django.utils import timezone
+from datetime import datetime,timezone
 from rest_framework.decorators import api_view,permission_classes
 from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.response import Response
@@ -68,7 +69,7 @@ class ClienteVagaView(APIView):
         #print("numero_vaga:{}, nome_cliente:{}".format(vaga_requerida.numero_vaga,usuario_cliente.username))
         else:
             cliente_vaga=Cliente_Vaga.objects.create(cliente=usuario_cliente,vaga=vaga_requerida,
-            hora_entrada = timezone.now(),transacao_is_terminada=False)
+            hora_entrada = datetime.now(),transacao_is_terminada=False)
             cli_vaga_serializer = ClienteVagaSerializer(cliente_vaga,data=request.data)
             vaga_requerida.ocupada=True
             print(vaga_requerida.ocupada)
