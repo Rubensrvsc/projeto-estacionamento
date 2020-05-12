@@ -81,7 +81,9 @@ class ClienteVagaView(APIView):
             print("numero_vaga: {}, nome_cliente: {}".format(cliente_vaga.vaga,cliente_vaga.cliente))
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
+@api_view(['GET'])
+def vaga_ja_alocada(request):
+    return Response({"valor":"Já existe uma vaga requerida por este cliente"})
 
 class Cria_Vaga(generics.CreateAPIView):
 
