@@ -84,7 +84,13 @@ class ClienteVagaView(APIView):
 
 @api_view(['GET'])
 def vaga_ja_alocada(request):
-    return Response({"valor":"Já existe uma vaga requerida por este cliente"})
+    nome_cli = request.data['cliente']
+    usuario_cliente = User.objects.get(username=nome_cli)
+    cliente_vaga = Cliente_Vaga.objects.filter(cliente=usuario_cliente,
+    transacao_em_andamento=True).exists()
+    cli_vaga = ClienteVagaSerializer(cliente_vaga)
+    return Response(cli_vaga.data)
+    #return Response({"valor":"Já existe uma vaga requerida por este cliente"})
 
 class Cria_Vaga(generics.CreateAPIView):
 
