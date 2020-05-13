@@ -83,9 +83,9 @@ class ClienteVagaView(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
-def vaga_ja_alocada(request):
-    nome_cli = request.data['cliente']
-    usuario_cliente = User.objects.get(username=nome_cli)
+def vaga_ja_alocada(request, cliente):
+    #nome_cli = request.data['cliente']
+    usuario_cliente = User.objects.get(username=cliente)
     try:
         cliente_vaga = Cliente_Vaga.objects.get(cliente=usuario_cliente,
         transacao_em_andamento=True)
