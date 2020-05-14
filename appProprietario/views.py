@@ -92,10 +92,14 @@ def vaga_ja_alocada(request, cliente):
         print("não existe cliente")
         res={"valor":0}
         return Response(res)
+    elif(cliente_vaga.count()>0):
+        print("existe vaga")
+        res={"valor":1}
+        return Response(res)
     
-    if request.method == 'GET':
-        cli_vaga = ClienteVagaSerializer(cliente_vaga)
-        return Response(cli_vaga.data)
+    #if request.method == 'GET':
+     #   cli_vaga = ClienteVagaSerializer(cliente_vaga)
+      #  return Response(cli_vaga.data)
     
     #return Response({"valor":"Já existe uma vaga requerida por este cliente"})
 
