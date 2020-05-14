@@ -84,13 +84,14 @@ class ClienteVagaView(APIView):
 
 @api_view(['GET'])
 def vaga_ja_alocada(request, cliente):
-    #nome_cli = request.data['cliente']
     usuario_cliente = User.objects.get(username=cliente)
-    try:
-        cliente_vaga = Cliente_Vaga.objects.get(cliente=usuario_cliente,
+    cliente_vaga = Cliente_Vaga.objects.filter(cliente=usuario_cliente,
         transacao_em_andamento=True)
-    except cliente_vaga.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    print("quantidade de vagas pelo cliente: "+str(cliente_vaga.count()))
+    if(cliente_vaga.count()==0):
+        print("não existe cliente")
+        res={"valor":0}
+        return Response(res)
     
     if request.method == 'GET':
         cli_vaga = ClienteVagaSerializer(cliente_vaga)
