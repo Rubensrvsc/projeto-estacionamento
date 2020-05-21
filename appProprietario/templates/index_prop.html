@@ -7,8 +7,8 @@
  <!-- /#wrapper -->
 {% block body %}
 <head>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!------ Include the above in your HEAD tag ---------->
   <style>
@@ -16,21 +16,16 @@
   </style>
   </head>
   <body>
+
+    <!--
   <div id="throbber" style="display:none; min-height:120px;"></div>
   <div id="noty-holder"></div>
   
   <div id="wrapper">
   
-      <!-- Navigation -->
+      
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          
   
-          
-          <!-- Top Menu Items -->
-        
-  
-          <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
           <div class="collapse navbar-collapse navbar-ex1-collapse" style="background-color: #616060; border:1px solid #616060;">
               <ul class="nav navbar-nav side-nav">
                 
@@ -53,9 +48,18 @@
   
               </ul>
           </div>
-          <!--- /.navbar-collapse -->
     </nav>
   </div>
+-->
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal">Home</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="#">{{request.user.prop}}</a>
+    <a class="p-2 text-dark" href="{% url 'cadastrar_vaga' %}">Cadastrar Vaga</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+</div>
 
 {% if request.user.Cliente.is_cliente is True %}
     <h1> Você não tem permissão de entrada</h1>
