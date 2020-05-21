@@ -65,7 +65,7 @@
     <h1> Você não tem permissão de entrada</h1>
 {% else %}
   <div>
-  <h2>Suas Vagas</h2>
+  <h2 style="text-align: center;">Vagas do seu estacionamento</h2>
   </br>
   <!-- Tem que começar a partir da classe Vaga-->
   {% if vagas_livres|length < 1 %}
@@ -73,7 +73,7 @@
     Não existe vaga livre
   </div>
 {% else %}
- <h1>Vagas livres</h1>
+ <h1 style="text-align: center;">Vagas livres</h1>
   {% for i in vagas_livres %}
   <div class="alert alert-success" role="alert">
         {{ i }}
@@ -87,7 +87,7 @@
 {% endfor %}
 {% endif %}
 
-<h1>Vagas Ocupadas</h1>
+<h1 style="text-align: center;">Vagas Ocupadas</h1>
 {% if vagas_ocupadas|length < 1 %}
 <div class="alert alert-danger" role="alert">
     Não existe vaga ocupada
