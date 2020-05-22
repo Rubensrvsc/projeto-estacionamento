@@ -155,7 +155,10 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 class VerVagaRecemSaida(APIView):
     
     def get(self,request):
-        pass
+        cv_front = 78
+        cliente_vaga = Cliente_Vaga.objects.get(id=cv_front)
+        cv_serializer = ClienteVagaSaidaSerializer(cliente_vaga)
+        return Response(cv_serializer.data)
 
 class Sai_Vaga_cliente(APIView):
     def put(self,request):
