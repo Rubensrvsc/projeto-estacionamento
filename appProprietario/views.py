@@ -152,6 +152,11 @@ class ClienteVagaSaida(generics.UpdateAPIView):
         print("numero_vaga: {}, nome_cliente: {}".format(cv.cliente,cv.vaga))
         return Response(status=status.HTTP_200_OK)'''
 
+class VerTodasAsVagas(APIView):
+
+    def get(self,request):
+        pass
+
 class VerVagaRecemSaida(APIView):
     
     def get(self,request):
