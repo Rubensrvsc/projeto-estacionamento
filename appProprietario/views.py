@@ -155,7 +155,9 @@ class ClienteVagaSaida(generics.UpdateAPIView):
 class VerTodasAsVagas(APIView):
 
     def get(self,request):
-        pass
+        vagas = Vaga.objects.all()
+        vagas_serializer = VagaSerializer(vagas,many=True)
+        return Response(vagas_serializer.data)
 
 class VerVagaRecemSaida(APIView):
     
