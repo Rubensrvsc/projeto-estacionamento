@@ -82,11 +82,13 @@ class ClienteVagaJsonSerializer(serializers.ModelSerializer):
 
     num_vaga = serializers.ReadOnlyField(source='vaga.numero_vaga')
     vaga_ocupada = serializers.ReadOnlyField(source='vaga.ocupada')
+    tipo_vaga = serializers.ReadOnlyField(source='vaga.tipo_vaga')
 
     class Meta:
         model = Cliente_Vaga
-        fields = ('vaga','cliente','hora_entrada','hora_saida','total_transacao',
-        'transacao_is_terminada','transacao_em_andamento','num_vaga','vaga_ocupada')
+        fields = ('vaga','cliente','hora_entrada',
+        'transacao_is_terminada','transacao_em_andamento','num_vaga','vaga_ocupada',
+        'tipo_vaga')
 
 class MostraNomePropsSerializer(serializers.ModelSerializer):
 
