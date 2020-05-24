@@ -78,6 +78,15 @@ class ClienteVagaSaidaSerializer(serializers.ModelSerializer):
         model = Cliente_Vaga
         fields = '__all__'
 
+class ClienteVagaJsonSerializer(serializers.ModelSerializer):
+
+    num_vaga = serializers.ReadOnlyField(source='vaga.numero_vaga')
+
+    class Meta:
+        model = Cliente_Vaga
+        fields = ('vaga','cliente','hora_entrada','hora_saida','total_transacao',
+        'transacao_is_terminada','transacao_em_andamento')
+
 class MostraNomePropsSerializer(serializers.ModelSerializer):
 
     class Meta:

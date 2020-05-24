@@ -26,7 +26,7 @@ urlpatterns =[
     path('clientesaidavaga/',Sai_Vaga_cliente.as_view(),name='update_vaga'),
     path('account-confirm-email/', VerifyEmailView.as_view(),
      name='account_email_verification_sent'),
-    path('vertodasvagas/',VerTodasAsVagas,name='vertodasvagas'),
+    path('vertodasvagas/',VerTodasAsVagas.as_view(),name='vertodasvagas'),
     #path('clientesaivaga/<str:nome_cli>/<int:id>/',update_cliente_vaga_saida),
     path('mostranomeprop/',MostraNomeProp.as_view(),name='mostra_nome_prop'),
     path('mostravagasprop/<int:id>/',ProcuraVagasProp.as_view(),name='procuravagasprop'),
