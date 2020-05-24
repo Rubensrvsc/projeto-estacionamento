@@ -159,10 +159,9 @@ class VerTodasAsVagas(APIView):
         cliente_vagas_serializer = ClienteVagaJsonSerializer(vagas,many=True)
         return Response(cliente_vagas_serializer.data)
 
-class VerVagaRecemSaida(APIView):
-    
-    def get(self,request):
-        cv_front = 78
+@api_view(['GET'])
+def VerVagaRecemSaida(request,id_vaga):
+        cv_front = 77
         cliente_vaga = Cliente_Vaga.objects.get(id=cv_front)
         cv_serializer = ClienteVagaSaidaSerializer(cliente_vaga)
         return Response(cv_serializer.data)
