@@ -160,9 +160,11 @@ class VerTodasAsVagas(APIView):
         return Response(cliente_vagas_serializer.data)
 
 @api_view(['GET'])
-def VerVagaRecemSaida(request,id_vaga):
+def VerVagaRecemSaida(request,cliente):
         cv_front = 77
-        cliente_vaga = Cliente_Vaga.objects.get(id=cv_front)
+        usuario_cliente = User.objects.get(username=cliente)
+        cliente_vaga = Cliente_Vaga.objects.filter(cliente=usuario_cliente,
+        transacao_em_andamento=False).last()
         cv_serializer = ClienteVagaSaidaSerializer(cliente_vaga)
         return Response(cv_serializer.data)
 
