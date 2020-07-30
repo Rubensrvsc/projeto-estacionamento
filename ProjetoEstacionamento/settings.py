@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     #'localflavor',
     'appCliente',
     'appProprietario',
-    'testeserializers',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

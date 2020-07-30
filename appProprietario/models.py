@@ -16,6 +16,7 @@ class Proprietario(models.Model):
 
     nome_prop = models.CharField(max_length=255)
     email_prop = models.EmailField()
+    valor_prop = models.IntegerField(default=0.1)
     #nome_loc_prop = models.CharField(max_length=250, blank=True, null=True)
     is_prop = models.BooleanField(default=True)
     #tipo_prop=models.CharField(choices=prop_choices)

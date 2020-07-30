@@ -26,5 +26,4 @@ urlpatterns = [
     path('auth/signup/',NameRegistrationView.as_view(),name="rest_name_register"),
     path('',include('appCliente.urls')),
     path('',include('appProprietario.urls')),
-    path('',include('testeserializers.urls'))
 ]
