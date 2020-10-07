@@ -60,6 +60,12 @@ INSTALLED_APPS = [
     'appProprietario',
 ]
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rubens.rvsc@gmail.com'
+EMAIL_HOST_PASSWORD = 'rvsccsvr1997'
+EMAIL_PORT = 587
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
@@ -158,6 +164,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
