@@ -26,7 +26,7 @@ urlpatterns = [
     path('auth/', include('rest_auth.urls')),
     path('auth/refresh-token/', refresh_jwt_token),
     #path('auth/signup/',NameRegistrationView.as_view(),name="rest_name_register"),
-    path('auth/signup/', RegisterView.as_view(), name='account_signup'),
+    path('auth/signup/', include('rest_auth.registration.urls'), name='account_signup'),
     
     path('',include('appCliente.urls')),
     path('',include('appProprietario.urls')),

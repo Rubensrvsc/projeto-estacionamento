@@ -216,6 +216,18 @@ def exclui_vaga(request,num_vaga):
     vaga.delete()
     return redirect('index_prop')
 
+@permission_classes((IsAuthenticated,))
+def lista_transacoes(request):
+    user = User.objects.get(username=request.user)
+    props = Proprietario.objects.get(nome_prop=user.username) 
+    cliente_vaga_livre = Cliente_Vaga.objects.filter(vaga__prop=props,transacao_is_terminada=True)
+    cliente_vaga_ocupada = Cliente_Vaga.objects.filter(vaga__prop=props,transacao_is_terminada=False)
+    print(cliente_vaga_livre)
+    return render(request,"lista_transacoes.html",
+    {"cliente_vaga_livre":cliente_vaga_livre
+    ,"cliente_vaga_ocupada":cliente_vaga_ocupada}
+    )
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def obtem_vagas_prop(request,id_prop):

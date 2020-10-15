@@ -1,0 +1,52 @@
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <style>
+    
+    </style>
+    </head>
+    <body>
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Home</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+              <a class="p-2 text-dark" href="#">{{request.user.prop}}</a>
+              <a class="p-2 text-dark" href="{% url 'cadastrar_vaga' %}">Cadastrar Vaga</a>
+              <a class="p-2 text-dark" href="{% url 'index_prop' %}">Home</a>
+            </nav>
+            <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+          </div>
+          <h1>Transações ainda em andamento</h1>
+          {% if cliente_vaga_ocupada|length < 1 %}
+          <div class="alert alert-danger" role="alert">
+              Não existe transação em andamento
+            </div>
+          {% else %}
+          <ul class="list-group"></ul>
+{% for i in cliente_vaga_livre %}
+        
+    <li class="list-group-item disabled">
+        Vaga: {{i.vaga}} </br>
+        Status: {{i.transacao_is_terminada}} </br>
+        Total da transacao: {{i.total_transacao}}
+    </li>
+    
+
+{% endfor %}
+</ul>
+{% endif %}
+          <h1 style="text-align: center;">Transações já terminadas</h1>
+<ul class="list-group"></ul>
+{% for i in cliente_vaga_livre %}
+        
+    <li class="list-group-item disabled">
+        Vaga: {{i.vaga}} </br>
+        Status: {{i.transacao_is_terminada}} </br>
+        Total da transacao: {{i.total_transacao}}
+    </li>
+    
+
+{% endfor %}
+</ul>
+</body>

@@ -33,6 +33,7 @@ urlpatterns =[
     path('obtemvagaaserocupada/<int:vaga_id>/',VagaASerOcupada.as_view(),name='vagaaserocupada'),
     path('obtemvagasprop/<int:id_prop>/',obtem_vagas_prop,name='obtemvagasprop'),
     #path('', include(router.urls)),
+    path('lista_transacoes',lista_transacoes,name='lista_transacoes'),
     path('mostraclientevaga/',MostraClienteVaga.as_view(),name='mostraclientevaga'),
     #path('saidavaga/',ClienteVagaSaida.as_view(),name='saidavaga'),
     path('cadastrar_vaga/',cadastrar_vaga,name='cadastrar_vaga'),
