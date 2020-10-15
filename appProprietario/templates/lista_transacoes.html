@@ -17,7 +17,8 @@
             </nav>
             <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
           </div>
-          <h1>Transações ainda em andamento</h1>
+          
+          <h1 style="text-align: center;">Transações ainda em andamento</h1>
           {% if cliente_vaga_ocupada|length < 1 %}
           <div class="alert alert-danger" role="alert">
               Não existe transação em andamento
