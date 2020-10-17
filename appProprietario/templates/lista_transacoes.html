@@ -1,3 +1,5 @@
+{% load mathfilters %}
+
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -30,7 +32,8 @@
     <li class="list-group-item disabled">
         Vaga: {{i.vaga}} </br>
         Status: {{i.transacao_is_terminada}} </br>
-        Total da transacao: {{i.total_transacao}}
+        Hora de entrada: {{i.hora_entrada}} <br>
+        Cliente: {{i.cliente}}
     </li>
     
 
@@ -43,8 +46,13 @@
         
     <li class="list-group-item disabled">
         Vaga: {{i.vaga}} </br>
-        Status: {{i.transacao_is_terminada}} </br>
-        Total da transacao: {{i.total_transacao}}
+        {% if i.total_transacao < 1%}
+        Total da transacao: {{i.total_transacao |mul:100 }} centavos
+        {% elif i.total_transacao > 0.9%}
+        otal da transacao: {{i.total_transacao}} reais
+        {% endif %}<br>
+        Cliente: {{i.cliente}} </br>
+        Hora de entrada: {{i.hora_entrada}}
     </li>
     
 

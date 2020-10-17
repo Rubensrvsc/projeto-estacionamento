@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     #'localflavor',
     'appCliente',
     'appProprietario',
+    'mathfilters',
 ]
 
 EMAIL_USE_TLS = True
