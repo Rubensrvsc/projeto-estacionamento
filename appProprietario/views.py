@@ -220,7 +220,7 @@ def exclui_vaga(request,num_vaga):
 def lista_transacoes(request):
     user = User.objects.get(username=request.user)
     props = Proprietario.objects.get(nome_prop=user.username) 
-    cliente_vaga_livre = Cliente_Vaga.objects.filter(vaga__prop=props,transacao_is_terminada=True)
+    cliente_vaga_livre = Cliente_Vaga.objects.filter(vaga__prop=props,transacao_is_terminada=True)[:5]
     cliente_vaga_ocupada = Cliente_Vaga.objects.filter(vaga__prop=props,transacao_is_terminada=False)
     print(cliente_vaga_livre)
     return render(request,"lista_transacoes.html",
