@@ -31,7 +31,9 @@
         
     <li class="list-group-item disabled">
         Vaga: {{i.vaga}} </br>
-        Status: {{i.transacao_is_terminada}} </br>
+        {% if i.transacao_is_terminada is False%}
+            Status: Transação em Andamento </br>
+        {% endif %} 
         Hora de entrada: {{i.hora_entrada}} <br>
         Cliente: {{i.cliente}}
     </li>
@@ -46,6 +48,9 @@
         
     <li class="list-group-item disabled">
         Vaga: {{i.vaga}} </br>
+        {% if i.transacao_is_terminada is True%}
+            Status: Transação Terminada  </br>
+        {% endif %} 
         {% if i.total_transacao < 1%}
         Total da transacao: {{i.total_transacao |mul:100 }} centavos
         {% elif i.total_transacao > 0.9%}
